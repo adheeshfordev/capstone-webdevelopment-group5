@@ -1,5 +1,6 @@
- //https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
- function authenticateToken(req, res, next) {
+const bcrypt = require('bcrypt')
+
+ const  authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
   
@@ -15,3 +16,4 @@
       next()
     })
   }
+module.exports = { authenticateToken}

@@ -1,5 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
+const { login, signup } = require('./controllers/AuthController');
+const { authenticateToken } = require('./middleware/AuthMiddleware');
 
 // get config vars
 dotenv.config();
@@ -25,45 +28,15 @@ app.get("/status", (request, response) => {
  });
 
 //https://blog.postman.com/how-to-create-a-rest-api-with-node-js-and-express/
-
+ //https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
 
   function generateAccessToken(username) {
    return jwt.sign(username, tokenSecret, { expiresIn: '1800s' });
  }
 
-app.post('/signup', async (req, res) => {
-   try {
-       const { username, password } = req.body;
-       if (!username || !password) {
-           return res.status(400).json({ error: 'Username and password are required' });
-       }
+app.post('/signup', signup);
 
-       const hashedPassword = await bcrypt.hash(password, 10);
-       users.push({ username, password: hashedPassword });
-       res.status(201).json({ message: 'User created successfully' });
-   } catch (error) {
-       res.status(500).json({ error: 'Internal Server Error' });
-   }
-});
-
-app.post('/login', async (req, res) => {
-   try {
-       const { username, password } = req.body;
-       if (!username || !password) {
-           return res.status(400).json({ error: 'Username and password are required' });
-       }
-
-       const user = users.find(user => user.username === username);
-       if (!user || !(await bcrypt.compare(password, user.password))) {
-           return res.status(401).json({ error: 'Invalid username or password' });
-       }
-
-       const token = generateAccessToken(user.username);
-       res.json({ token });
-   } catch (error) {
-       res.status(500).json({ error: 'Internal Server Error' });
-   }
-});
+app.post('/login', login);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
