@@ -30,10 +30,6 @@ app.get("/status", (request, response) => {
 //https://blog.postman.com/how-to-create-a-rest-api-with-node-js-and-express/
  //https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
 
-  function generateAccessToken(username) {
-   return jwt.sign(username, tokenSecret, { expiresIn: '1800s' });
- }
-
 app.post('/signup', signup);
 
 app.post('/login', login);

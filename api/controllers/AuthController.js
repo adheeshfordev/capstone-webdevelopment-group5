@@ -7,10 +7,10 @@ const login = async (req, res) => {
             return res.status(400).json({ error: 'Username and password are required' });
         }
  
-        const user = users.find(user => user.username === username);
+       /* const user = users.find(user => user.username === username);
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ error: 'Invalid username or password' });
-        }
+        }*/
  
         const token = generateAccessToken(user.username);
         res.json({ token });
@@ -33,5 +33,9 @@ const login = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
  }
+
+ const  generateAccessToken = (username) => {
+    return jwt.sign(username, tokenSecret, { expiresIn: '1800s' });
+  }
 
  module.exports = {login, signup}
