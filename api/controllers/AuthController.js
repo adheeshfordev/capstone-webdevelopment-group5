@@ -1,41 +1,53 @@
 const bcrypt = require('bcrypt')
+const user = require('../models/User')
+const jwt = require('jsonwebtoken')
 
 const login = async (req, res) => {
     try {
-        const { username, password } = req.body;
-        if (!username || !password) {
-            return res.status(400).json({ error: 'Username and password are required' });
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required' });
         }
  
-       /* const user = users.find(user => user.username === username);
-        if (!user || !(await bcrypt.compare(password, user.password))) {
+       const authUser = await user.findOne({email : email});
+       console.log(authUser);
+        if (!authUser || !(await bcrypt.compare(password, authUser.password))) {
             return res.status(401).json({ error: 'Invalid username or password' });
-        }*/
+        }
  
-        const token = generateAccessToken(user.username);
+        const token = generateAccessToken(authUser.email);
         res.json({ token });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
  }
 
  const signup = async (req, res) => {
     try {
-        const { username, password } = req.body;
-        if (!username || !password) {
-            return res.status(400).json({ error: 'Username and password are required' });
+        let { email, password, firstName, lastName, type } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required' });
         }
  
-        const hashedPassword = await bcrypt.hash(password, 10);
-        users.push({ username, password: hashedPassword });
+        password = await bcrypt.hash(password, 10);
+        await user.create({
+            email,
+            password,
+            firstName,
+            lastName,
+            type
+        });
         res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
  }
 
  const  generateAccessToken = (username) => {
-    return jwt.sign(username, tokenSecret, { expiresIn: '1800s' });
+    const tokenSecret=process.env.TOKEN_SECRET
+    return jwt.sign({name: username}, tokenSecret, { expiresIn: 1800 });
   }
 
  module.exports = {login, signup}

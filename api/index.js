@@ -7,6 +7,13 @@ const { authenticateToken } = require('./middleware/AuthMiddleware');
 // get config vars
 dotenv.config();
 
+const mongoose = require('mongoose')
+
+if (!process.env.MONGO_CONNECTION_STRING) {
+   console.error("No connection string found");
+ process.exit(1);
+}
+
 // access config var
 const tokenSecret = process.env.TOKEN_SECRET;
 const app = new express();
@@ -33,6 +40,8 @@ app.get("/status", (request, response) => {
 app.post('/signup', signup);
 
 app.post('/login', login);
+
+mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
