@@ -1,8 +1,9 @@
 api/node_modules
 adminportal/node_modules
 customerportal/node_modules
-api/.env
 
+# custom
+package-lock.json
 
 ## vite generated default ignore files
 # Logs
