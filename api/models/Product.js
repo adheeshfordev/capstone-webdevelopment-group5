@@ -11,6 +11,9 @@ const productSchema = new mongoose.Schema({
   releaseDate: { type: Date, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
+},
+ {
+  collection: 'Product'
 });
 
 const Product = mongoose.model('Product', productSchema);
