@@ -2,7 +2,7 @@ const user = require('../models/User')
 
 const userList = async (req, res) => {
     try {
-        const users = await user.find({});
+        const users = await user.find({}, {password:0});
         res.json({ users });
     } catch (error) {
         console.log(error);
@@ -10,4 +10,4 @@ const userList = async (req, res) => {
     }
 }
 
-module.exports = { productList }
+module.exports = { userList }
