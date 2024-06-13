@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const cartSchema = new mongoose.Schema({
     customer: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true },
     items: [
@@ -10,3 +11,6 @@ const cartSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });
+
+const Cart = mongoose.model('Cart', cartSchema);
+module.exports = Cart

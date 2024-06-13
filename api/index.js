@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const { login, signup } = require('./controllers/AuthController');
+const { productList } = require('./controllers/ProductController');
 const { authenticateToken } = require('./middleware/AuthMiddleware');
 
 // get config vars
@@ -40,6 +41,8 @@ app.get("/status", (request, response) => {
 app.post('/signup', signup);
 
 app.post('/login', login);
+
+app.get('/products', productList);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
