@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import Header from '../components/Header.jsx'
 
 export default function SignUp() {
     const [error, setError] = useState();
     const [success, setSuccess] = useState();
   return (
     <> 
+    <Header />
         <div className="container">
             <h1 className="title">
                 <span className="text-muted">Sign-</span>

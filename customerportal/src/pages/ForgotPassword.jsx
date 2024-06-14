@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Header from '../components/Header.jsx'
 
 export default function ForgotPassword() {
     const [error, setError] = useState();
@@ -6,6 +7,7 @@ export default function ForgotPassword() {
 
   return (
     <>  
+    <Header />
         <div className="container">
             <h1 className="title">
                 <span className="text-muted">Forgot-</span>
