@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
         <Header />
-        Home
+        <a href='/signin'>Home</a>
 
         <Footer />
     </div>
