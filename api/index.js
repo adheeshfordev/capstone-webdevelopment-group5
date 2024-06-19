@@ -52,7 +52,7 @@ app.post("/login", login);
 
 app.get("/products", productList);
 
-app.get("/userList", userList);
+app.get("/userList", authenticateToken, userList);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
