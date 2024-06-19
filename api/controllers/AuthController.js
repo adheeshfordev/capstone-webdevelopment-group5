@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const user = require('../models/User')
+const Token = require('../models/Token')
 const jwt = require('jsonwebtoken')
 
 const login = async (req, res) => {
@@ -16,6 +17,8 @@ const login = async (req, res) => {
         }
  
         const token = generateAccessToken(authUser.email);
+        const tokenDoc = new Token({ userId: authUser._id, token });
+        await tokenDoc.save();
         res.json({ token });
     } catch (error) {
         console.log(error);
