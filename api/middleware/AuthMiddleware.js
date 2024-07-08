@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const Token = require('../models/Token');
+const User = require('../models/User');
 
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -20,12 +21,18 @@ const authenticateToken = async (req, res, next) => {
             return res.sendStatus(403);
         }
 
-        jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+        jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
             if (err) {
                 return res.sendStatus(403);
             }
-
-            req.user = user;
+            console.log(user);
+            userObj = await User.findOne({ email: user.name });
+            if (userObj) {
+                req.user = userObj;
+            } else {
+                return res.sendStatus(403);
+            }
+            console.log(req.user);
             next();
         });
     } catch (error) {
@@ -35,6 +42,7 @@ const authenticateToken = async (req, res, next) => {
 };
 
 const authorizeAdmin = (req, res, next) => {
+    console.log(req.user);
     if (req.user.userType !== 'admin') {
         return res.sendStatus(403);
     }
