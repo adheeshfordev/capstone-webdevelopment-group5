@@ -34,4 +34,11 @@ const authenticateToken = async (req, res, next) => {
     }
 };
 
-module.exports = { authenticateToken };
+const authorizeAdmin = (req, res, next) => {
+    if (req.user.userType !== 'admin') {
+        return res.sendStatus(403);
+    }
+    next();
+};
+
+module.exports = { authenticateToken, authorizeAdmin };

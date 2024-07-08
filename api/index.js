@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { login, signup } = require("./controllers/AuthController");
 const { productList } = require("./controllers/ProductController");
 const { userList } = require("./controllers/UserController");
-const { authenticateToken } = require("./middleware/AuthMiddleware");
+const { authenticateToken, authorizeAdmin } = require("./middleware/AuthMiddleware");
 const cors = require("cors");
 
 // get config vars
@@ -52,7 +52,7 @@ app.post("/login", login);
 
 app.get("/products", productList);
 
-app.get("/userList", authenticateToken, userList);
+app.get("/userList", authenticateToken, authorizeAdmin, userList);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
