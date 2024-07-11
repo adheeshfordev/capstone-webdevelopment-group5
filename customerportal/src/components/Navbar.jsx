@@ -14,9 +14,8 @@ class Navbar extends Component {
     render() {
         const createLinkItem = (item, index) => {
             let linkColor = "";
-            if (item.color)
-                linkColor = item.color;
-            return <NavItems key={item.title + index} title={item.title} href={item.href} color={linkColor} />
+            if (item.color) linkColor = item.color;
+            return <NavItems key={item.title + index} title={item.title} href={item.href} color={linkColor} />;
         };
 
         const styles = {
@@ -25,9 +24,17 @@ class Navbar extends Component {
                 borderColor: this.state.navBorder,
             },
             brandStyle: {
-                color: this.state.brandColor
-            }
+                color: this.state.brandColor,
+            },
         };
+
+        const filteredItems = this.props.items.filter(item => {
+            if (this.props.isLoggedIn) {
+                return item.title !== "Signin" && item.title !== "Signup";
+            } else {
+                return item.title !== "Logout";
+            }
+        });
 
         return (
             <nav className="navbar navbar-inverse" style={styles.navStyle}>
@@ -41,7 +48,7 @@ class Navbar extends Component {
                 </div>
                 <div className="collapse navbar-collapse" id="nav-collapse">
                     <ul className="nav navbar-nav">
-                        {this.props.items.map(createLinkItem)}
+                        {filteredItems.map(createLinkItem)}
                     </ul>
                 </div>
             </nav>
