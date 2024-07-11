@@ -4,6 +4,7 @@ import Home from './pages/Home.jsx'
 import SignIn from './pages/SignIn.jsx'
 import SignUp from './pages/SignUp.jsx'
 import ForgotPassword from './pages/ForgotPassword.jsx'
+import Profile from './pages/Profile.jsx'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/signin' element={<SignIn />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
+          <Route path='/profile' element={<Profile/>} />
         </Routes>
      </BrowserRouter>
     </>
