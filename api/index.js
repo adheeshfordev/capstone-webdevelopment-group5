@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const { login, signup } = require("./controllers/AuthController");
-const { productList } = require("./controllers/ProductController");
+const { productList, createProduct, updateProduct, deleteProduct } = require("./controllers/ProductController");
 const { userList } = require("./controllers/UserController");
 const { authenticateToken, authorizeAdmin } = require("./middleware/AuthMiddleware");
 const cors = require("cors");
@@ -50,14 +50,14 @@ app.post("/signup", signup);
 
 app.post("/login", login);
 
-app.get("/products", productList);
+
 
 app.get("/userList", authenticateToken, authorizeAdmin, userList);
 
-app.get('/products', ProductController.productList);
-app.post('/products', ProductController.createProduct);
-app.put('/products/:id', ProductController.updateProduct);
-app.delete('/products/:id', ProductController.deleteProduct);
+app.get('/products', productList);
+app.post('/products', authenticateToken, authorizeAdmin, createProduct);
+app.put('/products/:id', authenticateToken, authorizeAdmin, updateProduct);
+app.delete('/products/:id', authenticateToken, authorizeAdmin, deleteProduct);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
