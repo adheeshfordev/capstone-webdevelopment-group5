@@ -4,14 +4,11 @@ const Product = require("../models/Product");
 const productList = async (req, res) => {
 	try {
 		const products = await Product.find({});
-		const productsWithId = products.map((product) => {
-			return { id: product._id, ...product._doc };
-		});
 		res.header(
 			"Content-Range",
-			`products 0-${productsWithId.length - 1}/${productsWithId.length}`,
+			`products 0-${products.length - 1}/${products.length}`,
 		);
-		res.json(productsWithId);
+		res.json(products);
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: "Internal Server Error" });
