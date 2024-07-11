@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
-const user = require('../models/User')
+const User = require('../models/User')
+const Token = require('../models/Token')
 const jwt = require('jsonwebtoken')
 
 const login = async (req, res) => {
@@ -8,20 +9,28 @@ const login = async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({ error: 'Email and password are required' });
         }
- 
-       const authUser = await user.findOne({email : email});
-       console.log(authUser);
+
+        const authUser = await User.findOne({ email: email });
         if (!authUser || !(await bcrypt.compare(password, authUser.password))) {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
- 
+
+        // Check for an existing valid token
+        const existingToken = await Token.findOne({ userId: authUser._id });
+        if (existingToken && new Date(existingToken.createdAt).getTime() + 86400 * 1000 > Date.now()) {
+            return res.json({ token: existingToken.token });
+        }
+
+        // Generate a new token
         const token = generateAccessToken(authUser.email);
+        const tokenDoc = new Token({ userId: authUser._id, token });
+        await tokenDoc.save();
         res.json({ token });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
- }
+};
 
  const signup = async (req, res) => {
     try {
