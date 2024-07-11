@@ -31,8 +31,13 @@ export default function SignIn() {
 
             const data = await response.json();
             console.log(data);
-            setError(data.error);
-            setSuccess("Logged In Successfully");
+            if (data.error) {
+                setError(data.error);
+                setSuccess("")
+            } else {
+                setSuccess("Logged In Successfully");
+                setError("")
+            }
         }catch(error){
             setSuccess(null);
             console.log(error);
