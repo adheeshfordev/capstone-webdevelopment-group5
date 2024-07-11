@@ -54,6 +54,11 @@ app.get("/products", productList);
 
 app.get("/userList", authenticateToken, authorizeAdmin, userList);
 
+app.get('/products', ProductController.productList);
+app.post('/products', ProductController.createProduct);
+app.put('/products/:id', ProductController.updateProduct);
+app.delete('/products/:id', ProductController.deleteProduct);
+
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
 const PORT = process.env.PORT || 3000;
