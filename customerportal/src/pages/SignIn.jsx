@@ -55,7 +55,7 @@ export default function SignIn() {
             </h1>
             <form className="form" onSubmit={submitForm}>
                 <input type="text" placeholder="email" id="email" className="input" onChange={onChangeData}/>
-                <input type="text" placeholder="password" id="password" className="input" onChange={onChangeData}/>
+                <input type="password" placeholder="password" id="password" className="input" onChange={onChangeData}/>
                 <div className="button-container">
                     <button className="button">Sign-In</button>
                 </div>
