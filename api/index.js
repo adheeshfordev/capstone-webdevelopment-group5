@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const { login, signup } = require("./controllers/AuthController");
+const {addToCart, createCart, updateCartItem, removeFromCart} = require("./controllers/CartController");
 const { productList, createProduct, updateProduct, deleteProduct } = require("./controllers/ProductController");
 const { userList, createUser, updateUser, deleteUser } = require("./controllers/UserController");
 const { authenticateToken, authorizeAdmin } = require("./middleware/AuthMiddleware");
@@ -62,6 +63,12 @@ app.delete('/products/:id', authenticateToken, authorizeAdmin, deleteProduct);
 app.post('/users', authenticateToken, authorizeAdmin, createUser);
 app.put('/users/:id', authenticateToken, authorizeAdmin, updateUser);
 app.delete('/users/:id', authenticateToken, authorizeAdmin, deleteUser);
+
+
+app.post('/cart', createCart);
+app.post('/cart/:cartId/items', addToCart);
+app.delete('/cart/:cartId/items/:productId', removeFromCart);
+app.put('/cart/:cartId/items', updateCartItem);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
