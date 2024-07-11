@@ -32,7 +32,7 @@ export default function SignIn() {
             const data = await response.json();
             console.log(data);
             setError(data.error);
-            setSuccess(data.token);
+            setSuccess("Logged In Successfully");
         }catch(error){
             setSuccess(null);
             console.log(error);
