@@ -3,8 +3,13 @@ const User = require('../models/User');
 // Get all users (excluding password and _id fields)
 const userList = async (req, res) => {
     try {
-        const users = await User.find({}, { password: 0, _id: 0 });
-        res.json({ users });
+        const usersWithoutId = await User.find({}, { password: 0 });
+        const users = usersWithoutId.map((user) => {
+			return { id: user._id, ...user._doc };
+		});
+        const totalCount = users.length;
+        res.setHeader('Content-Range', `users 0-${users.length}/${totalCount}`);
+        res.json(users);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -33,6 +38,8 @@ const updateUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
+
+        user = { id: user._id, ...user._doc };
         res.json({ user });
     } catch (error) {
         console.log(error);

@@ -56,7 +56,7 @@ const login = async (req, res) => {
 
  const  generateAccessToken = (username) => {
     const tokenSecret=process.env.TOKEN_SECRET
-    return jwt.sign({name: username}, tokenSecret, { expiresIn: 1800 });
+    return jwt.sign({name: username}, tokenSecret, { expiresIn: 86400 });
   }
 
  module.exports = {login, signup}

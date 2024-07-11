@@ -52,7 +52,7 @@ app.post("/login", login);
 
 
 
-app.get("/userList", authenticateToken, authorizeAdmin, userList);
+app.get("/users", authenticateToken, authorizeAdmin, userList);
 
 app.get('/products', productList);
 app.post('/products', authenticateToken, authorizeAdmin, createProduct);
