@@ -3,7 +3,11 @@ const Product = require("../models/Product");
 // Get all products
 const productList = async (req, res) => {
 	try {
-		const products = await Product.find({});
+		let productsRaw = await Product.find({}, {imageUrl:0});
+		products = productsRaw.map((product) => {
+			return { imageUrl: convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg"), ...product._doc };
+		});
+		console.log(products);
 		res.header(
 			"Content-Range",
 			`products 0-${products.length - 1}/${products.length}`,
