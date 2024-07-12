@@ -5,22 +5,22 @@ const loggedOutItems = [
 	{
 		title: "Home",
 		href: "/",
-		color: "#334155"
+	},
+	{
+		title: "Shop",
+		href: "/shop",
 	},
 	{
 		title: "SignUp",
 		href: "/signup",
-		color: "#334155"
 	},
 	{
 		title: "SignIn",
 		href: "/signin",
-		color: "#334155"
 	},
 	{
 		title: "ForgotPassword",
 		href: "/forgotpassword",
-		color: "#334155"
 	}
 ];
 
@@ -29,6 +29,10 @@ const loggedInItems = [
 		title: "Home",
 		href: "/",
 		color: "#334155"
+	},
+	{
+		title: "Shop",
+		href: "/shop",
 	},
 	{
 		title: "SignOut",

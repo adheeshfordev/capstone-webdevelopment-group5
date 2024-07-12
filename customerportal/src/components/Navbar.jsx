@@ -42,32 +42,33 @@ class Navbar extends Component {
         console.log(isLoggedIn);
 
         return (
-            <nav className="navbar navbar-inverse" style={styles.navStyle}>
-                <div className="navbar-header">
-                    <button className="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                    </button>
-                    <div className="navbar-brand" style={styles.brandStyle}>Pixel Paradise</div>
-                </div>
-                <div className="collapse navbar-collapse" id="nav-collapse">
-                    <ul className="nav navbar-nav">
-                        {this.props.items.map(createLinkItem)}
-                    </ul>
-                    <ul className="nav navbar-nav navbar-right">
-                        {console.log(isLoggedIn)}
-                        { isLoggedIn ? (
-                            <li><a href="/logout">Logout</a></li>
-                        ) : (
-                            <>
-                                <li><a href="/signin">Sign-In</a></li>
-                                <li><a href="/signup">Sign-Up</a></li>
-                            </>
-                        )}
-                    </ul>
-                </div>
-            </nav>
+            
+
+
+
+
+            <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+			<div class="container">
+				<a class="navbar-brand" href="index.html">Pixel Paradise<span>.</span></a>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarsFurni">
+					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+						{this.props.items.map(createLinkItem)}
+					</ul>
+
+					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+						<li><a class="nav-link" href="#"><img src="/src/images/user.svg" /></a></li>
+						<li><a class="nav-link" href="cart.html"><img src="/src/images/cart.svg" /></a></li>
+					</ul>
+				</div> 
+			</div>
+				
+		</nav>
         );
     }
 }

@@ -6,6 +6,9 @@ import SignUp from './pages/SignUp.jsx'
 import SignOut from './pages/SignOut.jsx'
 import ForgotPassword from './pages/ForgotPassword.jsx'
 import Profile from './pages/Profile.jsx'
+import ShopPage from './pages/ShopPage';
+import ProductDetail from './components/ProductDetail';
+import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
 
@@ -19,6 +22,9 @@ function App() {
           <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/profile' element={<Profile/>} />
           <Route path='/signout' element={<SignOut />} />
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
      </BrowserRouter>
     </>
