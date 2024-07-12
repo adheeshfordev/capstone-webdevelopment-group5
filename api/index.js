@@ -2,9 +2,24 @@ const express = require("express");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const { login, signup } = require("./controllers/AuthController");
-const { productList, createProduct, updateProduct, deleteProduct } = require("./controllers/ProductController");
-const { userList, createUser, updateUser, deleteUser, getUser } = require("./controllers/UserController");
-const { authenticateToken, authorizeAdmin } = require("./middleware/AuthMiddleware");
+const {
+	productList,
+	createProduct,
+	updateProduct,
+	deleteProduct,
+	getProduct,
+} = require("./controllers/ProductController");
+const {
+	userList,
+	createUser,
+	updateUser,
+	deleteUser,
+	getUser,
+} = require("./controllers/UserController");
+const {
+	authenticateToken,
+	authorizeAdmin,
+} = require("./middleware/AuthMiddleware");
 const cors = require("cors");
 
 // get config vars
@@ -50,19 +65,32 @@ app.post("/signup", signup);
 
 app.post("/login", login);
 
-
-
 app.get("/userList", authenticateToken, authorizeAdmin, userList);
 
-app.get('/products', productList);
-app.post('/products', authenticateToken, authorizeAdmin, createProduct);
-app.put('/products/:id', authenticateToken, authorizeAdmin, updateProduct);
-app.delete('/products/:id', authenticateToken, authorizeAdmin, deleteProduct);
+app.get("/products", productList);
+app.get("/products/:id", getProduct);
+app.post("/products", createProduct, authenticateToken, authorizeAdmin);
+app.put("/products/:id", updateProduct, authenticateToken, authorizeAdmin);
+app.delete("/products/:id", deleteProduct, authenticateToken, authorizeAdmin);
 
-app.get('/users/:id', authenticateToken, getUser);
-app.post('/users', authenticateToken, authorizeAdmin, createUser);
-app.put('/users/:id', authenticateToken, authorizeAdmin, updateUser);
-app.delete('/users/:id', authenticateToken, authorizeAdmin, deleteUser);
+app.get("/users/:id", authenticateToken, getUser);
+app.post("/users", authenticateToken, authorizeAdmin, createUser);
+app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
+app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
+
+// no auth middleware version
+//
+// app.get("/products/:id", getProduct);
+// app.get("/products", productList);
+// app.post("/products", createProduct);
+// app.put("/products/:id", updateProduct);
+// app.delete("/products/:id", deleteProduct);
+//
+// app.get("/users/:id", getUser);
+// app.get("/users/", userList);
+// app.post("/users", createUser);
+// app.put("/users/:id", updateUser);
+// app.delete("/users/:id", deleteUser);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
@@ -70,4 +98,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
 	console.log("Server Listening on PORT:", PORT);
 });
-
