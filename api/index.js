@@ -61,9 +61,8 @@ app.get("/status", (request, response) => {
 //https://blog.postman.com/how-to-create-a-rest-api-with-node-js-and-express/
 //https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
 
-app.post("/signup", signup);
-
 app.post("/login", login);
+app.post("/signup", signup);
 
 app.get("/products", productList);
 app.get("/products/:id", getProduct);
@@ -71,25 +70,11 @@ app.post("/products", createProduct, authenticateToken, authorizeAdmin);
 app.put("/products/:id", updateProduct, authenticateToken, authorizeAdmin);
 app.delete("/products/:id", deleteProduct, authenticateToken, authorizeAdmin);
 
-app.get("/users/:id", authenticateToken, getUser);
-app.get("/users", authenticateToken, authorizeAdmin, userList);
-app.post("/users", authenticateToken, authorizeAdmin, createUser);
-app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
-app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
-
-// no auth middleware version
-//
-// app.get("/products/:id", getProduct);
-// app.get("/products", productList);
-// app.post("/products", createProduct);
-// app.put("/products/:id", updateProduct);
-// app.delete("/products/:id", deleteProduct);
-//
-// app.get("/users/:id", getUser);
-// app.get("/users/", userList);
-// app.post("/users", createUser);
-// app.put("/users/:id", updateUser);
-// app.delete("/users/:id", deleteUser);
+app.get("/users/:id", getUser, authenticateToken);
+app.get("/users", userList, authenticateToken, authorizeAdmin);
+app.post("/users", createUser, authenticateToken, authorizeAdmin);
+app.put("/users/:id", updateUser, authenticateToken, authorizeAdmin);
+app.delete("/users/:id", deleteUser, authenticateToken, authorizeAdmin);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
