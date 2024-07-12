@@ -3,7 +3,7 @@ import React from 'react';
 const Banner = () => {
   return (
     <div style={styles.banner}>
-      <button style={styles.button}>Shop from our collection of games</button>
+      <a href="/shop" style={styles.button}>Shop from our collection of games</a>
     </div>
   );
 };
@@ -11,7 +11,7 @@ const Banner = () => {
 const styles = {
   banner: {
     height: '100vh', // Full viewport height
-    backgroundImage: 'url("path/to/your/image.jpg")', // Replace with your image path
+    backgroundImage: 'url("src/images/banner.jpg")', // Replace with your image path
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     display: 'flex',
@@ -19,13 +19,14 @@ const styles = {
     alignItems: 'center',
   },
   button: {
-    padding: '10px 20px',
+    padding: '20px',
     fontSize: '18px',
-    backgroundColor: '#ff6600',
+    backgroundColor: '#3b5d50',
     color: '#fff',
     border: 'none',
     cursor: 'pointer',
     borderRadius: '5px',
+    textDecoration: 'none'
   },
 };
 
