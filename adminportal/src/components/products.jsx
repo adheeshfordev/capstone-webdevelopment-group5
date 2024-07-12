@@ -59,7 +59,7 @@ export const ProductCreate = (props) => (
 		<SimpleForm>
 			<TextInput source="name" />
 			<TextInput source="description" />
-			<TextInput source="price" />
+			<NumberInput source="price" />
 			<TextInput source="category" />
 			<TextInput source="platform" />
 			<TextInput source="imageUrl" />
