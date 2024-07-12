@@ -3,14 +3,6 @@ import { fetchUtils } from "react-admin";
 
 const apiUrl = "http://localhost:3000"; // Your API base URL
 
-const httpClient = (url, options = {}) => {
-	if (!options.headers) {
-		options.headers = new Headers({ Accept: "application/json" });
-	}
-	const token = localStorage.getItem("token");
-	options.headers.set("Authorization", token);
-	return fetchUtils.fetchJson(url, options);
-};
 
 const authProvider = {
 	login: ({ username, password }) => {
@@ -19,14 +11,20 @@ const authProvider = {
 			body: JSON.stringify({ email: username, password }),
 			headers: new Headers({ "Content-Type": "application/json" }),
 		})
-			.then((response) => {
+			.then(response => {
 				if (response.status < 200 || response.status >= 300) {
 					throw new Error(response.statusText);
 				}
-				return response.json();
+				return response.json(); // Parse the response body as JSON
 			})
 			.then(({ token }) => {
-				localStorage.setItem("token", token);
+				console.log(token);
+				if (token) {
+					localStorage.setItem("token", token); // Store the token in local storage
+					console.log(localStorage.getItem("token"));
+				} else {
+					throw new Error("Token not found in response");
+				}
 			});
 	},
 	logout: () => {
