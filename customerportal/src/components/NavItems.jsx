@@ -21,7 +21,7 @@ const NavItems = (props) => {
     };
 
     return (
-        <li><a class="nav-link" href={props.href}>{props.title}</a></li>
+        <li><a className="nav-link" href={props.href}>{props.title}</a></li>
     );
 };
 

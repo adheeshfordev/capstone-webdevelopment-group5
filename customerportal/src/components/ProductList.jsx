@@ -4,9 +4,9 @@ import ProductItem from './ProductItem';
 
 function ProductList({ products }) {
   return (
-    <div class="row">
+    <div className="row">
       {products.map(product => (
-        <ProductItem key={product.id} product={product} />
+        <ProductItem key={product._id} product={product} />
       ))}
     </div>
   );

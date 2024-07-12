@@ -1,28 +1,58 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import ProductList from '../components/ProductList';
 import Header from '../components/Header';
 
-const productsData = [
-  { id: 1, name: 'Product 1', description: 'Description of Product 1', price: 10, image: 'https://via.placeholder.com/150' },
-  { id: 2, name: 'Product 2', description: 'Description of Product 2', price: 20, image: 'https://via.placeholder.com/150' },
-  { id: 3, name: 'Product 3', description: 'Description of Product 3', price: 30, image: 'https://via.placeholder.com/150' },
-];
+class ShopPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      products: [],
+      error: null,
+    };
+  }
 
-function ShopPage() {
-  const [products] = useState(productsData);
+  componentDidMount() {
+    this.fetchProducts();
+  }
 
-  return (
-    <div className="shop-page">
-       <Header />
-    <div class="untree_co-section product-section before-footer-section">
-		    <div class="container">
+  fetchProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/products', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-                <ProductList products={products} />
-					
-            </div>
-    </div>
-    </div>
-  );
+      const data = await response.json();
+      if (response.ok) {
+        this.setState({ products: data });
+      } else {
+        this.setState({ error: data.message || 'Failed to fetch products' });
+      }
+    } catch (error) {
+      this.setState({ error: error.message || 'An error occurred while fetching products' });
+    }
+  };
+
+  render() {
+    const { products, error } = this.state;
+
+    return (
+      <div className="shop-page">
+        <Header />
+        <div className="untree_co-section product-section before-footer-section">
+          <div className="container">
+            {error ? (
+              <p className="error-message">{error}</p>
+            ) : (
+              <ProductList products={products} />
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default ShopPage;
