@@ -19,6 +19,12 @@ const productList = async (req, res) => {
 	}
 };
 
+const convertGsToHttps = (gsUrl) => {
+	const bucketName = "pixelparadisecapstone.appspot.com";
+	const filePath = gsUrl.split(`${bucketName}/`)[1];
+	return `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(filePath)}?alt=media`;
+};
+
 // Get a single product
 const getProduct = async (req, res) => {
 	try {
