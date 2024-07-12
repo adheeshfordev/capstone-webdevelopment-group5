@@ -2,10 +2,32 @@ const express = require("express");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const { login, signup } = require("./controllers/AuthController");
-const { productList, createProduct, updateProduct, deleteProduct } = require("./controllers/ProductController");
-const { userList, createUser, updateUser, deleteUser } = require("./controllers/UserController");
-const { authenticateToken, authorizeAdmin } = require("./middleware/AuthMiddleware");
+const {
+	productList,
+	createProduct,
+	updateProduct,
+	deleteProduct,
+	getProduct,
+} = require("./controllers/ProductController");
+const {
+	userList,
+	createUser,
+	updateUser,
+	deleteUser,
+	getUser,
+} = require("./controllers/UserController");
+const {
+	authenticateToken,
+	authorizeAdmin,
+} = require("./middleware/AuthMiddleware");
 const cors = require("cors");
+const firebaseAdmin = require("firebase-admin");
+
+var serviceAccount = require("./service-account.json");
+
+firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount)
+});
 
 // get config vars
 dotenv.config();
@@ -46,13 +68,16 @@ app.get("/status", (request, response) => {
 //https://blog.postman.com/how-to-create-a-rest-api-with-node-js-and-express/
 //https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
 
+app.post("/login", login);
 app.post("/signup", signup);
 
-app.post("/login", login);
+app.get("/products", productList);
+app.get("/products/:id", getProduct);
+app.post("/products", createProduct, authenticateToken, authorizeAdmin);
+app.put("/products/:id", updateProduct, authenticateToken, authorizeAdmin);
+app.delete("/products/:id", deleteProduct, authenticateToken, authorizeAdmin);
 
-
-
-app.get("/userList", authenticateToken, authorizeAdmin, userList);
+app.get("/users", authenticateToken, authorizeAdmin, userList);
 
 app.get('/products', productList);
 app.post('/products', authenticateToken, authorizeAdmin, createProduct);
@@ -69,4 +94,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
 	console.log("Server Listening on PORT:", PORT);
 });
-

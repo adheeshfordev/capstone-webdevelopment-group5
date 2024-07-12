@@ -16,7 +16,9 @@ const authenticateToken = async (req, res, next) => {
             return res.sendStatus(403);
         }
 
-        const isTokenExpired = new Date(tokenDoc.createdAt).getTime() + 86400 * 1000 < Date.now();
+         console.log(new Date(tokenDoc.createdAt).getTime() + (86400 * 1000));
+         console.log(Date.now());
+        const isTokenExpired = (new Date(tokenDoc.createdAt).getTime() + (86400 * 1000)) < Date.now();
         if (isTokenExpired) {
             return res.sendStatus(403);
         }
