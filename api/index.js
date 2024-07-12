@@ -65,8 +65,6 @@ app.post("/signup", signup);
 
 app.post("/login", login);
 
-app.get("/userList", authenticateToken, authorizeAdmin, userList);
-
 app.get("/products", productList);
 app.get("/products/:id", getProduct);
 app.post("/products", createProduct, authenticateToken, authorizeAdmin);
@@ -74,6 +72,7 @@ app.put("/products/:id", updateProduct, authenticateToken, authorizeAdmin);
 app.delete("/products/:id", deleteProduct, authenticateToken, authorizeAdmin);
 
 app.get("/users/:id", authenticateToken, getUser);
+app.get("/users", authenticateToken, authorizeAdmin, userList);
 app.post("/users", authenticateToken, authorizeAdmin, createUser);
 app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
 app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
