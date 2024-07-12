@@ -21,9 +21,7 @@ const NavItems = (props) => {
     };
 
     return (
-        <li className={hover ? "active" : ""} onMouseOver={mouseOver} onMouseOut={mouseOut}>
-            <a href={props.href} style={styles}>{props.title}</a>
-        </li>
+        <li><a class="nav-link" href={props.href}>{props.title}</a></li>
     );
 };
 
