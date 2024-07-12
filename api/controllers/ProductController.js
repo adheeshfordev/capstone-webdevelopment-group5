@@ -3,15 +3,36 @@ const Product = require("../models/Product");
 // Get all products
 const productList = async (req, res) => {
 	try {
-		const products = await Product.find({});
-		const productsWithId = products.map((product) => {
-			return { id: product._id, ...product._doc };
+		let productsRaw = await Product.find({}, {imageUrl:0});
+		products = productsRaw.map((product) => {
+			return { imageUrl: convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg"), ...product._doc };
 		});
+		console.log(products);
 		res.header(
 			"Content-Range",
-			`products 0-${productsWithId.length - 1}/${productsWithId.length}`,
+			`products 0-${products.length - 1}/${products.length}`,
 		);
-		res.json(productsWithId);
+		res.json(products);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
+
+const convertGsToHttps = (gsUrl) => {
+	const bucketName = "pixelparadisecapstone.appspot.com";
+	const filePath = gsUrl.split(`${bucketName}/`)[1];
+	return `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(filePath)}?alt=media`;
+};
+
+// Get a single product
+const getProduct = async (req, res) => {
+	try {
+		const product = await Product.findById(req.params.id);
+		if (!product) {
+			return res.status(404).json({ error: "Product not found" });
+		}
+		res.json(product);
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: "Internal Server Error" });
@@ -61,4 +82,10 @@ const deleteProduct = async (req, res) => {
 	}
 };
 
-module.exports = { productList, createProduct, updateProduct, deleteProduct };
+module.exports = {
+	productList,
+	createProduct,
+	updateProduct,
+	deleteProduct,
+	getProduct,
+};

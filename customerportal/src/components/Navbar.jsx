@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Cookies from 'js-cookie';
 import NavItems from './NavItems.jsx';
 
 class Navbar extends Component {
@@ -8,15 +9,23 @@ class Navbar extends Component {
             navColor: "",
             navBorder: "",
             brandColor: "",
+            isLoggedIn: false,
         };
+    }
+
+    componentDidMount() {
+        const token = Cookies.get('token');
+        if (token) {
+            console.log(token);
+            this.setState({ isLoggedIn: true });
+        }
     }
 
     render() {
         const createLinkItem = (item, index) => {
             let linkColor = "";
-            if (item.color)
-                linkColor = item.color;
-            return <NavItems key={item.title + index} title={item.title} href={item.href} color={linkColor} />
+            if (item.color) linkColor = item.color;
+            return <NavItems key={item.title + index} title={item.title} href={item.href} color={linkColor} />;
         };
 
         const styles = {
@@ -25,9 +34,12 @@ class Navbar extends Component {
                 borderColor: this.state.navBorder,
             },
             brandStyle: {
-                color: this.state.brandColor
-            }
+                color: this.state.brandColor,
+            },
         };
+
+        const { isLoggedIn } = this.state;
+        console.log(isLoggedIn);
 
         return (
             <nav className="navbar navbar-inverse" style={styles.navStyle}>
@@ -42,6 +54,17 @@ class Navbar extends Component {
                 <div className="collapse navbar-collapse" id="nav-collapse">
                     <ul className="nav navbar-nav">
                         {this.props.items.map(createLinkItem)}
+                    </ul>
+                    <ul className="nav navbar-nav navbar-right">
+                        {console.log(isLoggedIn)}
+                        { isLoggedIn ? (
+                            <li><a href="/logout">Logout</a></li>
+                        ) : (
+                            <>
+                                <li><a href="/signin">Sign-In</a></li>
+                                <li><a href="/signup">Sign-Up</a></li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </nav>

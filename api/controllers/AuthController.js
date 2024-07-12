@@ -40,7 +40,7 @@ const login = async (req, res) => {
         }
  
         password = await bcrypt.hash(password, 10);
-        await user.create({
+        await User.create({
             email,
             password,
             firstName,
