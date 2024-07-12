@@ -6,6 +6,7 @@ import {
 	Edit,
 	EditButton,
 	List,
+	PasswordInput,
 	SelectInput,
 	SimpleForm,
 	TextField,
@@ -42,6 +43,7 @@ export const UserEdit = (props) => (
 			<TextInput source="email" />
 			<TextInput source="firstName" />
 			<TextInput source="lastName" />
+			<PasswordInput source="password" />
 			<SelectInput source="userType" choices={userTypeChoices} />
 		</SimpleForm>
 	</Edit>
@@ -53,6 +55,7 @@ export const UserCreate = (props) => (
 			<TextInput source="email" />
 			<TextInput source="firstName" />
 			<TextInput source="lastName" />
+			<PasswordInput source="password" />
 			<SelectInput source="userType" choices={userTypeChoices} />
 		</SimpleForm>
 	</Create>
