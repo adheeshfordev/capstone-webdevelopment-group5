@@ -3,9 +3,10 @@ const Product = require("../models/Product");
 // Get all products
 const productList = async (req, res) => {
 	try {
-		let productsRaw = await Product.find({}, {imageUrl:0});
+		let productsRaw = await Product.find({}, {});
 		products = productsRaw.map((product) => {
-			return { imageUrl: convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg"), ...product._doc };
+			product.imageUrl = product.imageUrl ? convertGsToHttps(product.imageUrl) : convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg")
+			return { imageUrl: product.imageUrl, ...product._doc };
 		});
 		console.log(products);
 		res.header(
