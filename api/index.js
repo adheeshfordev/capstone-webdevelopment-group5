@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const { login, signup } = require("./controllers/AuthController");
+const { adminLogin, login, signup } = require("./controllers/AuthController");
 const {
 	productList,
 	createProduct,
@@ -68,6 +68,7 @@ app.get("/status", (request, response) => {
 //https://blog.postman.com/how-to-create-a-rest-api-with-node-js-and-express/
 //https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
 
+app.post("/admin/login", adminLogin);
 app.post("/login", login);
 app.post("/signup", signup);
 
