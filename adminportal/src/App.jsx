@@ -1,6 +1,7 @@
 import "./App.css";
 
 import { Admin, Resource } from "react-admin";
+import authProvider from "./auth-provider";
 import {
 	ProductCreate,
 	ProductEdit,
@@ -13,7 +14,7 @@ import wrappedRestProvider from "./wrapped-ra-data-simple-rest";
 function App() {
 	return (
 		<>
-			<Admin dataProvider={wrappedRestProvider}>
+			<Admin dataProvider={wrappedRestProvider} authProvider={authProvider}>
 				<Resource
 					name="products"
 					list={ProductList}
@@ -29,7 +30,6 @@ function App() {
 					icon={UserIcon}
 				/>
 			</Admin>
-			,
 		</>
 	);
 }
