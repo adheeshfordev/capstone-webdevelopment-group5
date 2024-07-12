@@ -6,9 +6,6 @@ export default function Home() {
   return (
     <div>
         <Header />
-        <a href='/signin'>Home</a>
-
-        <Footer />
     </div>
   )
 }
