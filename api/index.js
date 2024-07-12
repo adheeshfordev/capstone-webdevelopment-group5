@@ -21,6 +21,13 @@ const {
 	authorizeAdmin,
 } = require("./middleware/AuthMiddleware");
 const cors = require("cors");
+const firebaseAdmin = require("firebase-admin");
+
+var serviceAccount = require("./service-account.json");
+
+firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount)
+});
 
 // get config vars
 dotenv.config();
