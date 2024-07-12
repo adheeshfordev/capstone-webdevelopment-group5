@@ -6,6 +6,7 @@ import {
 	Edit,
 	EditButton,
 	List,
+	SelectInput,
 	SimpleForm,
 	TextField,
 	TextInput,
@@ -13,6 +14,11 @@ import {
 
 import AccountBox from "@mui/icons-material/Egg";
 export const UserIcon = AccountBox;
+
+const userTypeChoices = [
+	{ id: "user", name: "User" },
+	{ id: "admin", name: "Admin" },
+];
 
 export const UserList = (props) => {
 	return (
@@ -36,7 +42,7 @@ export const UserEdit = (props) => (
 			<TextInput source="email" />
 			<TextInput source="firstName" />
 			<TextInput source="lastName" />
-			<TextInput source="userType" />
+			<SelectInput source="userType" choices={userTypeChoices} />
 		</SimpleForm>
 	</Edit>
 );
@@ -47,7 +53,7 @@ export const UserCreate = (props) => (
 			<TextInput source="email" />
 			<TextInput source="firstName" />
 			<TextInput source="lastName" />
-			<TextInput source="userType" />
+			<SelectInput source="userType" choices={userTypeChoices} />
 		</SimpleForm>
 	</Create>
 );
