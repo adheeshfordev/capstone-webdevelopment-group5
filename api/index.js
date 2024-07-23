@@ -16,10 +16,18 @@ const {
 	deleteUser,
 	getUser,
 } = require("./controllers/UserController");
+const { 
+	clearCart, 
+	removeItemFromCart, 
+	updateCartItemQuantity, 
+	addItemToCart, 
+	getCartByCustomerId 
+} = require("./controllers/CartController");
 const {
 	authenticateToken,
 	authorizeAdmin,
 } = require("./middleware/AuthMiddleware");
+
 const cors = require("cors");
 const firebaseAdmin = require("firebase-admin");
 
@@ -83,6 +91,12 @@ app.get("/users/:id", authenticateToken, authorizeAdmin, getUser);
 app.post("/users", authenticateToken, authorizeAdmin, createUser);
 app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
 app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
+
+app.get('/cart', authenticateToken, getCartByCustomerId);
+app.post('/cart', authenticateToken,addItemToCart);
+app.put('/cart', authenticateToken, updateCartItemQuantity);
+app.delete('/cart/item', authenticateToken, removeItemFromCart);
+app.delete('/cart', authenticateToken, clearCart);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
