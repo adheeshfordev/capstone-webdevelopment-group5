@@ -9,6 +9,7 @@ import Profile from './pages/Profile.jsx'
 import ShopPage from './pages/ShopPage';
 import ProductDetail from './components/ProductDetail';
 import CheckoutPage from './pages/CheckoutPage';
+import CartPage from './pages/CartPage.jsx';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/signout' element={<SignOut />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
      </BrowserRouter>

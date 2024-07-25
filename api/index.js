@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const { login, signup } = require("./controllers/AuthController");
+const { adminLogin, login, signup } = require("./controllers/AuthController");
 const {
 	productList,
 	createProduct,
@@ -16,17 +16,25 @@ const {
 	deleteUser,
 	getUser,
 } = require("./controllers/UserController");
+const { 
+	clearCart, 
+	removeItemFromCart, 
+	updateCartItemQuantity, 
+	addItemToCart, 
+	getCartByCustomerId 
+} = require("./controllers/CartController");
 const {
 	authenticateToken,
 	authorizeAdmin,
 } = require("./middleware/AuthMiddleware");
+
 const cors = require("cors");
 const firebaseAdmin = require("firebase-admin");
 
 var serviceAccount = require("./service-account.json");
 
 firebaseAdmin.initializeApp({
-  credential: firebaseAdmin.credential.cert(serviceAccount)
+	credential: firebaseAdmin.credential.cert(serviceAccount),
 });
 
 // get config vars
@@ -68,25 +76,27 @@ app.get("/status", (request, response) => {
 //https://blog.postman.com/how-to-create-a-rest-api-with-node-js-and-express/
 //https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
 
+app.post("/admin/login", adminLogin);
 app.post("/login", login);
 app.post("/signup", signup);
 
 app.get("/products", productList);
 app.get("/products/:id", getProduct);
-app.post("/products", createProduct, authenticateToken, authorizeAdmin);
-app.put("/products/:id", updateProduct, authenticateToken, authorizeAdmin);
-app.delete("/products/:id", deleteProduct, authenticateToken, authorizeAdmin);
+app.post("/products", authenticateToken, authorizeAdmin, createProduct);
+app.put("/products/:id", authenticateToken, authorizeAdmin, updateProduct);
+app.delete("/products/:id", authenticateToken, authorizeAdmin, deleteProduct);
 
 app.get("/users", authenticateToken, authorizeAdmin, userList);
+app.get("/users/:id", authenticateToken, authorizeAdmin, getUser);
+app.post("/users", authenticateToken, authorizeAdmin, createUser);
+app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
+app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
 
-app.get('/products', productList);
-app.post('/products', authenticateToken, authorizeAdmin, createProduct);
-app.put('/products/:id', authenticateToken, authorizeAdmin, updateProduct);
-app.delete('/products/:id', authenticateToken, authorizeAdmin, deleteProduct);
-
-app.post('/users', authenticateToken, authorizeAdmin, createUser);
-app.put('/users/:id', authenticateToken, authorizeAdmin, updateUser);
-app.delete('/users/:id', authenticateToken, authorizeAdmin, deleteUser);
+app.get('/cart', authenticateToken, getCartByCustomerId);
+app.post('/cart', authenticateToken,addItemToCart);
+app.put('/cart', authenticateToken, updateCartItemQuantity);
+app.delete('/cart/item', authenticateToken, removeItemFromCart);
+app.delete('/cart', authenticateToken, clearCart);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 

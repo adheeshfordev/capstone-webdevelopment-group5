@@ -1,17 +1,13 @@
-import simpleRestProvider from "ra-data-simple-rest";
-import { fetchUtils } from "react-admin";
-
 const apiUrl = "http://localhost:3000"; // Your API base URL
-
 
 const authProvider = {
 	login: ({ username, password }) => {
-		return fetch(`${apiUrl}/login`, {
+		return fetch(`${apiUrl}/admin/login`, {
 			method: "POST",
 			body: JSON.stringify({ email: username, password }),
 			headers: new Headers({ "Content-Type": "application/json" }),
 		})
-			.then(response => {
+			.then((response) => {
 				if (response.status < 200 || response.status >= 300) {
 					throw new Error(response.statusText);
 				}
