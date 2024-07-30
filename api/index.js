@@ -31,6 +31,8 @@ const {
 	checkout
 } = require("./controllers/CheckoutController");
 
+const { listOrders } = require('./controllers/OrderController');
+
 const cors = require("cors");
 const firebaseAdmin = require("firebase-admin");
 
@@ -102,6 +104,8 @@ app.delete('/cart/item', authenticateToken, removeItemFromCart);
 app.delete('/cart', authenticateToken, clearCart);
 
 app.post('/checkout', authenticateToken, checkout);
+
+app.get('/orders', authenticateToken, authorizeAdmin, listOrders);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
