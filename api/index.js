@@ -27,6 +27,9 @@ const {
 	authenticateToken,
 	authorizeAdmin,
 } = require("./middleware/AuthMiddleware");
+const {
+	checkout
+} = require("./controllers/CheckoutController");
 
 const cors = require("cors");
 const firebaseAdmin = require("firebase-admin");
@@ -97,6 +100,8 @@ app.post('/cart', authenticateToken,addItemToCart);
 app.put('/cart', authenticateToken, updateCartItemQuantity);
 app.delete('/cart/item', authenticateToken, removeItemFromCart);
 app.delete('/cart', authenticateToken, clearCart);
+
+app.post('/checkout', authenticateToken, checkout);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
