@@ -43,8 +43,7 @@ export default function ResetPassword() {
             <Header />
             <div className="container">
                 <h1 className="title">
-                    <span className="text-muted">Reset-</span>
-                    <span className="text-dark">Password</span>
+                    <span className="text-dark">Reset Password</span>
                 </h1>
                 <form className="form" onSubmit={submitForm}>
                     <p className="text-dark-reset-password">
