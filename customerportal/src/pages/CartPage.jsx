@@ -26,6 +26,13 @@ class CartPage extends Component {
       });
 
       const data = await response.json();
+
+      if (response.status === 403) {
+        this.props.history.push('/signin');
+        return;
+      }
+
+
       if (response.ok) {
         this.setState({ cart: data });
       } else {
@@ -138,9 +145,7 @@ class CartPage extends Component {
                   <h3>Total: ${cart.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
                 </div>
                 <button className="btn btn-danger" onClick={this.handleClearCart}>Clear Cart</button>
-                <form className="checkout-form">
-                  <button className="btn btn-primary" type="submit">Go to Checkout</button>
-                </form>
+                <a className="btn" href="/checkout">Checkout</a>
               </div>
             ) : (
               <div>No products to display</div>
