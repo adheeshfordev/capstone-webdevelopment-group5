@@ -2,6 +2,9 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Token = require("../models/Token");
 const jwt = require("jsonwebtoken");
+const crypto = require('crypto');
+const PasswordResetToken = require('../models/PasswordResetToken');
+const sendEmail = require('../utils/sendEmail');
 
 const adminLogin = async (req, res) => {
 	try {
@@ -81,6 +84,35 @@ const signup = async (req, res) => {
 			userType,
 		});
 		res.status(201).json({ message: "User created successfully" });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
+
+const forgotPassword = async (req, res) => {
+	try {
+		const { email } = req.body;
+		if (!email) {
+			return res.status(400).json({ error: "Email is required" });
+		}
+
+		const user = await User.findOne({ email });
+		if (!user) {
+			return res.status(400).json({ error: "User with this email does not exist" });
+		}
+
+		const token = crypto.randomBytes(32).toString('hex');
+		const passwordResetToken = new PasswordResetToken({
+			userId: user._id,
+			token,
+		});
+		await passwordResetToken.save();
+
+		const resetUrl = `${process.env.CLIENT_URL}/password-reset/${token}`;
+		await sendEmail(user.email, 'Password Reset', `To reset your password, click the following link: ${resetUrl}`);
+
+		res.status(200).json({ message: "Password reset link has been sent to your email" });
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: "Internal Server Error" });
