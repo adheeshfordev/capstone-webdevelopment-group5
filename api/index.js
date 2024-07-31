@@ -37,6 +37,7 @@ const {
 	validate
 } = require("./middleware/ValidationMiddleware");
 const { forgotPassword, resetPassword } = require('./controllers/AuthController');
+const { listOrders } = require('./controllers/OrderController');
 
 const cors = require("cors");
 const firebaseAdmin = require("firebase-admin");
@@ -110,10 +111,10 @@ app.delete('/cart', authenticateToken, clearCart);
 
 app.post('/checkout', authenticateToken, checkout);
 
-// Add this after other routes
 app.post('/forgot-password', forgotPassword);
 app.post('/reset-password', resetPassword);
 
+app.get('/orders', authenticateToken, authorizeAdmin, listOrders);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
