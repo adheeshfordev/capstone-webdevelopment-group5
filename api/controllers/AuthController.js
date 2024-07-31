@@ -87,5 +87,35 @@ const signup = async (req, res) => {
 	}
 };
 
-module.exports = { adminLogin, login, signup };
+const resetPassword = async (req, res) => {
+	try {
+		const { token, newPassword } = req.body;
+		if (!token || !newPassword) {
+			return res.status(400).json({ error: "Token and new password are required" });
+		}
+
+		const passwordResetToken = await PasswordResetToken.findOne({ token });
+		if (!passwordResetToken) {
+			return res.status(400).json({ error: "Invalid or expired token" });
+		}
+
+		const user = await User.findById(passwordResetToken.userId);
+		if (!user) {
+			return res.status(400).json({ error: "User does not exist" });
+		}
+
+		user.password = await bcrypt.hash(newPassword, 10);
+		await user.save();
+		await PasswordResetToken.findByIdAndDelete(passwordResetToken._id);
+
+		res.status(200).json({ message: "Password reset successful" });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
+
+module.exports = { adminLogin, login, signup, forgotPassword, resetPassword };
+
+
 
