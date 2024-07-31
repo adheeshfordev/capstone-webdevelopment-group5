@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-// import './ProductDetail.css';
-
-const productsData = [
-  { id: 1, name: 'Product 1', description: 'Description of Product 1', price: 10, image: '/src/images/product-3.jfif' },
-  { id: 2, name: 'Product 2', description: 'Description of Product 2', price: 20, image: '/src/images/product-3.jfif' },
-  { id: 3, name: 'Product 3', description: 'Description of Product 3', price: 30, image: '/src/images/product-3.jfif' },
-];
 
 function ProductDetail() {
   const { id } = useParams();
-  const product = productsData.find(p => p.id === parseInt(id));
+  const [product, setProduct] = useState(null);
+  const [error, setError] = useState(null);
 
-  if (!product) return <div>Product not found</div>;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/products/${id}`);
+        const data = await response.json();
+        if (response.ok) {
+          setProduct(data);
+        } else {
+          setError(data.message || 'Failed to fetch product');
+        }
+      } catch (error) {
+        setError(error.message || 'An error occurred while fetching the product');
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (error) return <div className="error-message">{error}</div>;
+  if (!product) return <div>Loading...</div>;
 
   return (
     <div className="product-detail">
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p>${product.price}</p>
-      <img src='/src/images/product-3.jfif' alt={product.name} />
+      <img src={product.imageUrl} alt={product.name} />
       <Link to={`/checkout`} state={{ product }} className="checkout-button">Checkout</Link>
     </div>
-    
   );
 }
 
