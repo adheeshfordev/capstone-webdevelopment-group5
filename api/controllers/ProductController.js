@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 const Product = require("../models/Product");
+const multer = require('multer');
+const path = require('path');
 
 // Validation rules
 const productValidationRules = () => [
@@ -119,10 +121,61 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024 // Limit file size to 5MB
+  }
+});
+
+const uploadImage = async (file) => {
+  const blob = bucket.file(file.originalname);
+  const blobStream = blob.createWriteStream({
+    resumable: false,
+    contentType: file.mimetype
+  });
+
+  return new Promise((resolve, reject) => {
+    blobStream.on('error', (error) => reject(error));
+    blobStream.on('finish', async () => {
+      const publicUrl = `gs://${bucket.name}/${blob.name}`;
+      resolve(publicUrl);
+    });
+    blobStream.end(file.buffer);
+  });
+};
+
+// Endpoint to upload an image and update product.imageUrl
+const uploadProductImage = [
+  upload.single('image'),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+      }
+      const imageUrl = await uploadImage(req.file);
+      const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        { imageUrl },
+        { new: true, runValidators: true }
+      );
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+      res.json(product);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+];
+
+
 module.exports = {
   productList,
   createProduct,
   updateProduct,
   deleteProduct,
   getProduct,
+  uploadProductImage,
 };

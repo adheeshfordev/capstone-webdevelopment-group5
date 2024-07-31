@@ -46,6 +46,7 @@ var serviceAccount = require("./service-account.json");
 
 firebaseAdmin.initializeApp({
 	credential: firebaseAdmin.credential.cert(serviceAccount),
+	storageBucket: "pixelparadisecapstone.appspot.com"
 });
 
 // get config vars
