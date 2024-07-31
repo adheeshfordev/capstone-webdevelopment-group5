@@ -1,0 +1,17 @@
+.product-detail img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .product-detail .lead {
+    font-size: 1.25rem;
+  }
+  
+  .product-detail .text-success {
+    font-size: 1.5rem;
+  }
+  
+  .product-detail .mt-3 {
+    margin-top: 1rem;
+  }
+  

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import Header from '../components/Header';
 
 function ProductDetail() {
   const { id } = useParams();
@@ -24,16 +26,28 @@ function ProductDetail() {
     fetchProduct();
   }, [id]);
 
-  if (error) return <div className="error-message">{error}</div>;
+  if (error) return <div className="alert alert-danger">{error}</div>;
   if (!product) return <div>Loading...</div>;
 
   return (
-    <div className="product-detail">
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <p>${product.price}</p>
-      <img src={product.imageUrl} alt={product.name} />
-      <Link to={`/checkout`} state={{ product }} className="checkout-button">Checkout</Link>
+<div>
+        <Header />
+    
+    <Container className="product-detail mt-5">
+      <Row>
+        <Col md={6} className="text-center">
+          <img src={product.imageUrl} alt={product.name} className="img-fluid rounded" />
+        </Col>
+        <Col md={6}>
+          <h1 className="display-4">{product.name}</h1>
+          <p className="lead">{product.description}</p>
+          <h3 className="text-success">${product.price}</h3>
+          <Link to={`/checkout`} state={{ product }}>
+            <Button variant="primary" className="mt-3">Checkout</Button>
+          </Link>
+        </Col>
+      </Row>
+    </Container>
     </div>
   );
 }

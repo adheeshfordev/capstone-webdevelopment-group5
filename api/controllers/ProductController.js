@@ -48,6 +48,11 @@ const convertGsToHttps = (gsUrl) => {
   return `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(filePath)}?alt=media`;
 };
 
+const processImageUrl = (imageUrl) => {
+  return imageUrl ? convertGsToHttps(imageUrl) : 
+  convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg");
+}
+
 // Get a single product
 const getProduct = async (req, res) => {
   try {
@@ -55,6 +60,7 @@ const getProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
     }
+    product.imageUrl = processImageUrl(product.imageUrl);
     res.json(product);
   } catch (error) {
     console.log(error);
