@@ -3,6 +3,12 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
+const profileUpdateValidationRules = () => [
+    body('email').isEmail().withMessage('Please provide a valid email'),
+    body('firstName').not().isEmpty().withMessage('First name is required'),
+    body('lastName').not().isEmpty().withMessage('Last name is required'),
+];
+
 // Validation rules
 const userValidationRules = () => [
     body('email').isEmail().withMessage('Please provide a valid email'),
@@ -163,4 +169,39 @@ const getUser = async (req, res) => {
     }
 };
 
-module.exports = { getUser, userList, createUser, updateUser, deleteUser };
+const updateUserProfile = [
+    profileUpdateValidationRules(),
+    validate,
+    async (req, res) => {
+        try {
+            const { email, password, firstName, lastName } = req.body;
+            const updateFields = { email, firstName, lastName };
+
+            // Update the user profile
+            const user = await User.findByIdAndUpdate(
+                req.user.id,
+                { ...updateFields, updatedAt: new Date() },
+                {
+                    new: true,
+                    runValidators: true,
+                    select: '-password', // Exclude password from the returned document
+                },
+            );
+
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            if (error.name === 'ValidationError') {
+                res.status(400).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        }
+    }
+];
+
+module.exports = { getUser, userList, createUser, updateUser, deleteUser, updateUserProfile };
