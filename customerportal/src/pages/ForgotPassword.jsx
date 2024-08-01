@@ -1,30 +1,61 @@
-import React, { useState } from 'react'
-import Header from '../components/Header.jsx'
+import React, { useState } from 'react';
+import Header from '../components/Header.jsx';
 
 export default function ForgotPassword() {
-    const [error, setError] = useState();
-    const [success, setSuccess] = useState();
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
-  return (
-    <>  
-    <Header />
-        <div className="container">
-            <h1 className="title">
-                <span className="text-muted">Forgot-</span>
-                <span className="text-dark">Password</span>
-            </h1>
-            <form className="form">
-                <p className="text-dark-forgot-password">
-                    Please enter your associated email here:
-                </p>
-                <input type="text" placeholder="email@email.com" id="email" className="input" />
-                <div className="button-container">
-                    <button className="button">Send Email</button>
-                </div>
-            </form>
-            {error && <p className='error-message'>{error}</p>}
-            {success && <p className='.success-message'>{success}</p>}
-        </div>
-    </>
-  )
+    const onChangeData = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const submitForm = async (evt) => {
+        evt.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:3000/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+            if (data.error) {
+                setError(data.error);
+                setSuccess(null);
+            } else {
+                setSuccess('Password reset link has been sent to your email');
+                setError(null);
+            }
+        } catch (error) {
+            setError(error.message || 'An error occurred');
+            setSuccess(null);
+        }
+    };
+
+    return (
+        <>
+            <Header />
+            <div className="container">
+                <h1 className="title">
+                    <span className="text-muted">Forgot-</span>
+                    <span className="text-dark">Password</span>
+                </h1>
+                <form className="form" onSubmit={submitForm}>
+                    <p className="text-dark-forgot-password">
+                        Please enter your associated email here:
+                    </p>
+                    <input type="text" placeholder="email@email.com" id="email" className="input" onChange={onChangeData} />
+                    <div className="button-container">
+                        <button type="submit" className="button">Send Email</button>
+                    </div>
+                </form>
+                {error && <p className='error-message'>{error}</p>}
+                {success && <p className='success-message'>{success}</p>}
+            </div>
+        </>
+    );
 }
