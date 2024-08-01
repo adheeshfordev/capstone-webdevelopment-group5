@@ -9,8 +9,10 @@ import {
 	ProductList,
 } from "./components/products";
 import { UserCreate, UserEdit, UserIcon, UserList } from "./components/users";
+import { OrderList } from "./components/orders";
 import wrappedRestProvider from "./wrapped-ra-data-simple-rest";
 
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
 function App() {
 	return (
 		<>
@@ -28,6 +30,11 @@ function App() {
 					edit={UserEdit}
 					create={UserCreate}
 					icon={UserIcon}
+				/>
+				<Resource
+					name="orders"
+					list={OrderList}
+					icon={ShoppingCart}
 				/>
 			</Admin>
 		</>
