@@ -1,7 +1,10 @@
+// src/pages/CheckoutPage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const CheckoutPage = () => {
   const [cart, setCart] = useState(null);
@@ -14,11 +17,6 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = Cookies.get('token');
-    if (!token) {
-      navigate('/signin');
-      return;
-    }
     fetchCart();
   }, []);
 
@@ -162,6 +160,7 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
