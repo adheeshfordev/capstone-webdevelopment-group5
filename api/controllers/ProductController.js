@@ -170,6 +170,35 @@ const uploadProductImage = [
   }
 ];
 
+const searchProducts = async (req, res) => {
+  try {
+    const searchQuery = req.query.q;
+    if (!searchQuery) {
+      return res.status(400).json({ error: "Search query is required" });
+    }
+
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: searchQuery, $options: 'i' } },
+        { description: { $regex: searchQuery, $options: 'i' } },
+        { developer: { $regex: searchQuery, $options: 'i' } },
+        { platform: { $regex: searchQuery, $options: 'i' } }
+      ]
+    });
+
+    const processedProducts = products.map((product) => {
+      product.imageUrl = processImageUrl(product.imageUrl);
+      return { imageUrl: product.imageUrl, ...product._doc };
+    });
+
+    res.json(processedProducts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
 
 module.exports = {
   productList,
@@ -178,4 +207,5 @@ module.exports = {
   deleteProduct,
   getProduct,
   uploadProductImage,
+  searchProducts
 };

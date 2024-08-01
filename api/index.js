@@ -9,6 +9,7 @@ const {
 	deleteProduct,
 	uploadProductImage,
 	getProduct,
+	searchProducts
 } = require("./controllers/ProductController");
 const {
 	userList,
@@ -111,6 +112,8 @@ app.post('/forgot-password', forgotPassword);
 app.post('/reset-password', resetPassword);
 
 app.get('/orders', authenticateToken, authorizeAdmin, listOrders);
+app.get('/search', searchProducts);
+
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
