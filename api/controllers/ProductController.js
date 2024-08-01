@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 const Product = require("../models/Product");
 const multer = require('multer');
+const { bucket } = require("../utils/firebase");
 const path = require('path');
 
 // Validation rules
