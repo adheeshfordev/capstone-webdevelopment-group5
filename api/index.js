@@ -7,6 +7,7 @@ const {
 	createProduct,
 	updateProduct,
 	deleteProduct,
+	uploadProductImage,
 	getProduct,
 } = require("./controllers/ProductController");
 const {
@@ -40,14 +41,7 @@ const { forgotPassword, resetPassword } = require('./controllers/AuthController'
 const { listOrders } = require('./controllers/OrderController');
 
 const cors = require("cors");
-const firebaseAdmin = require("firebase-admin");
 
-var serviceAccount = require("./service-account.json");
-
-firebaseAdmin.initializeApp({
-	credential: firebaseAdmin.credential.cert(serviceAccount),
-	storageBucket: "pixelparadisecapstone.appspot.com"
-});
 
 // get config vars
 dotenv.config();
@@ -95,6 +89,7 @@ app.post("/signup", signup);
 app.get("/products", productList);
 app.get("/products/:id", getProduct);
 app.post("/products", productValidationRules, validate, authenticateToken, authorizeAdmin, createProduct);
+app.post("/products/:id/upload", authenticateToken, authorizeAdmin, uploadProductImage);
 app.put("/products/:id", productValidationRules, validate, authenticateToken, authorizeAdmin, updateProduct);
 app.delete("/products/:id", authenticateToken, authorizeAdmin, deleteProduct);
 
