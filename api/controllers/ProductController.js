@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 const Product = require("../models/Product");
+const multer = require('multer');
+const { bucket } = require("../utils/firebase");
+const path = require('path');
 
 // Validation rules
 const productValidationRules = () => [
@@ -33,7 +36,6 @@ const productList = async (req, res) => {
       product.imageUrl = product.imageUrl ? convertGsToHttps(product.imageUrl) : convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg");
       return { imageUrl: product.imageUrl, ...product._doc };
     });
-    console.log(products);
     res.header("Content-Range", `products 0-${products.length - 1}/${products.length}`);
     res.json(products);
   } catch (error) {
@@ -48,6 +50,11 @@ const convertGsToHttps = (gsUrl) => {
   return `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(filePath)}?alt=media`;
 };
 
+const processImageUrl = (imageUrl) => {
+  return imageUrl ? convertGsToHttps(imageUrl) : 
+  convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg");
+}
+
 // Get a single product
 const getProduct = async (req, res) => {
   try {
@@ -55,6 +62,7 @@ const getProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
     }
+    product.imageUrl = processImageUrl(product.imageUrl);
     res.json(product);
   } catch (error) {
     console.log(error);
@@ -113,10 +121,91 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024 // Limit file size to 5MB
+  }
+});
+
+const uploadImage = async (file) => {
+  const blob = bucket.file(file.originalname);
+  const blobStream = blob.createWriteStream({
+    resumable: false,
+    contentType: file.mimetype
+  });
+
+  return new Promise((resolve, reject) => {
+    blobStream.on('error', (error) => reject(error));
+    blobStream.on('finish', async () => {
+      const publicUrl = `gs://${bucket.name}/${blob.name}`;
+      resolve(publicUrl);
+    });
+    blobStream.end(file.buffer);
+  });
+};
+
+// Endpoint to upload an image and update product.imageUrl
+const uploadProductImage = [
+  upload.single('image'),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+      }
+      const imageUrl = await uploadImage(req.file);
+      const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        { imageUrl },
+        { new: true, runValidators: true }
+      );
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+      res.json(product);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+];
+
+const searchProducts = async (req, res) => {
+  try {
+    const searchQuery = req.query.q;
+    if (!searchQuery) {
+      return res.status(400).json({ error: "Search query is required" });
+    }
+
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: searchQuery, $options: 'i' } },
+        { description: { $regex: searchQuery, $options: 'i' } },
+        { developer: { $regex: searchQuery, $options: 'i' } },
+        { platform: { $regex: searchQuery, $options: 'i' } }
+      ]
+    });
+
+    const processedProducts = products.map((product) => {
+      product.imageUrl = processImageUrl(product.imageUrl);
+      return { imageUrl: product.imageUrl, ...product._doc };
+    });
+
+    res.json(processedProducts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+
 module.exports = {
   productList,
   createProduct,
   updateProduct,
   deleteProduct,
   getProduct,
+  uploadProductImage,
+  searchProducts
 };

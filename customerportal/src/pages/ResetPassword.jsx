@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import Header from '../components/Header.jsx';
+import { useParams } from 'react-router-dom';
 
-export default function ForgotPassword() {
-    const [email, setEmail] = useState('');
+export default function ResetPassword() {
+    const { token } = useParams();
+    const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
     const onChangeData = (event) => {
-        setEmail(event.target.value);
+        setPassword(event.target.value);
     };
 
     const submitForm = async (evt) => {
         evt.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/forgot-password', {
+            const response = await fetch('http://localhost:3000/reset-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ token, newPassword: password }),
             });
 
             const data = await response.json();
@@ -27,7 +29,7 @@ export default function ForgotPassword() {
                 setError(data.error);
                 setSuccess(null);
             } else {
-                setSuccess('Password reset link has been sent to your email');
+                setSuccess('Password has been reset successfully');
                 setError(null);
             }
         } catch (error) {
@@ -41,16 +43,15 @@ export default function ForgotPassword() {
             <Header />
             <div className="container">
                 <h1 className="title">
-                    <span className="text-muted">Forgot-</span>
-                    <span className="text-dark">Password</span>
+                    <span className="text-dark">Reset Password</span>
                 </h1>
                 <form className="form" onSubmit={submitForm}>
-                    <p className="text-dark-forgot-password">
-                        Please enter your associated email here:
+                    <p className="text-dark-reset-password">
+                        Please enter your new password:
                     </p>
-                    <input type="text" placeholder="email@email.com" id="email" className="input" onChange={onChangeData} />
+                    <input type="password" placeholder="New Password" id="password" className="input" onChange={onChangeData} />
                     <div className="button-container">
-                        <button type="submit" className="button">Send Email</button>
+                        <button type="submit" className="button">Reset Password</button>
                     </div>
                 </form>
                 {error && <p className='error-message'>{error}</p>}

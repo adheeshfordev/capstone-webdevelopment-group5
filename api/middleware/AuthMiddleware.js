@@ -32,6 +32,7 @@ const authenticateToken = async (req, res, next) => {
             if (userObj) {
                 req.user = userObj;
             } else {
+                console.log(user.name);
                 return res.sendStatus(403);
             }
             console.log(req.user);
@@ -45,6 +46,7 @@ const authenticateToken = async (req, res, next) => {
 
 const authorizeAdmin = (req, res, next) => {
     console.log(req.user);
+    console.log();
     if (req.user.userType !== 'admin') {
         return res.sendStatus(403);
     }

@@ -7,7 +7,9 @@ const {
 	createProduct,
 	updateProduct,
 	deleteProduct,
+	uploadProductImage,
 	getProduct,
+	searchProducts
 } = require("./controllers/ProductController");
 const {
 	userList,
@@ -27,15 +29,20 @@ const {
 	authenticateToken,
 	authorizeAdmin,
 } = require("./middleware/AuthMiddleware");
+const {
+	checkout
+} = require("./controllers/CheckoutController");
+
+const {
+	productValidationRules,
+	userValidationRules,
+	validate
+} = require("./middleware/ValidationMiddleware");
+const { forgotPassword, resetPassword } = require('./controllers/AuthController');
+const { listOrders } = require('./controllers/OrderController');
 
 const cors = require("cors");
-const firebaseAdmin = require("firebase-admin");
 
-var serviceAccount = require("./service-account.json");
-
-firebaseAdmin.initializeApp({
-	credential: firebaseAdmin.credential.cert(serviceAccount),
-});
 
 // get config vars
 dotenv.config();
@@ -82,13 +89,14 @@ app.post("/signup", signup);
 
 app.get("/products", productList);
 app.get("/products/:id", getProduct);
-app.post("/products", authenticateToken, authorizeAdmin, createProduct);
-app.put("/products/:id", authenticateToken, authorizeAdmin, updateProduct);
+app.post("/products", productValidationRules, validate, authenticateToken, authorizeAdmin, createProduct);
+app.post("/products/:id/upload", authenticateToken, authorizeAdmin, uploadProductImage);
+app.put("/products/:id", productValidationRules, validate, authenticateToken, authorizeAdmin, updateProduct);
 app.delete("/products/:id", authenticateToken, authorizeAdmin, deleteProduct);
 
 app.get("/users", authenticateToken, authorizeAdmin, userList);
 app.get("/users/:id", authenticateToken, authorizeAdmin, getUser);
-app.post("/users", authenticateToken, authorizeAdmin, createUser);
+app.post("/users",  authenticateToken, authorizeAdmin, createUser);
 app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
 app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
 
@@ -97,6 +105,15 @@ app.post('/cart', authenticateToken,addItemToCart);
 app.put('/cart', authenticateToken, updateCartItemQuantity);
 app.delete('/cart/item', authenticateToken, removeItemFromCart);
 app.delete('/cart', authenticateToken, clearCart);
+
+app.post('/checkout', authenticateToken, checkout);
+
+app.post('/forgot-password', forgotPassword);
+app.post('/reset-password', resetPassword);
+
+app.get('/orders', authenticateToken, authorizeAdmin, listOrders);
+app.get('/search', searchProducts);
+
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
