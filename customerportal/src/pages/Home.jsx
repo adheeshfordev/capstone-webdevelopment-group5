@@ -39,7 +39,7 @@ export default function Home() {
 					</div> 
 					
 					<div className="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-						<a className="product-item" href="cart.html">
+						<a className="product-item" href="/cart">
 							<img src="/src/images/product-1.jpg" className="img-fluid product-thumbnail"/>
 							<h3 className="product-title">Spider-Man Miles Morales</h3>
 							<strong className="product-price">$50.00</strong>
@@ -51,7 +51,7 @@ export default function Home() {
 					</div> 
 					
 					<div className="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-						<a className="product-item" href="cart.html">
+						<a className="product-item" href="/cart">
 							<img src="/src/images/product-2.jfif" className="img-fluid product-thumbnail"/>
 							<h3 className="product-title">NBA 2K</h3>
 							<strong className="product-price">$78.00</strong>
@@ -63,7 +63,7 @@ export default function Home() {
 					</div>
 					
 					<div className="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-						<a className="product-item" href="cart.html">
+						<a className="product-item" href="/cart">
 							<img src="/src/images/product-3.png" className="img-fluid product-thumbnail"/>
 							<h3 className="product-title">GOD Fall</h3>
 							<strong className="product-price">$43.00</strong>
