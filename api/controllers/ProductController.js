@@ -36,7 +36,6 @@ const productList = async (req, res) => {
       product.imageUrl = product.imageUrl ? convertGsToHttps(product.imageUrl) : convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg");
       return { imageUrl: product.imageUrl, ...product._doc };
     });
-    console.log(products);
     res.header("Content-Range", `products 0-${products.length - 1}/${products.length}`);
     res.json(products);
   } catch (error) {

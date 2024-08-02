@@ -174,7 +174,7 @@ const updateUserProfile = [
     validate,
     async (req, res) => {
         try {
-            const { email, password, firstName, lastName } = req.body;
+            const { email, firstName, lastName } = req.body;
             const updateFields = { email, firstName, lastName };
 
             // Update the user profile

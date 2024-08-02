@@ -96,8 +96,8 @@ app.delete("/products/:id", authenticateToken, authorizeAdmin, deleteProduct);
 
 app.get("/users", authenticateToken, authorizeAdmin, userList);
 app.get("/users/:id", authenticateToken, authorizeAdmin, getUser);
-app.post("/users", userValidationRules, validate, authenticateToken, authorizeAdmin, createUser);
-app.put("/users/:id", userValidationRules, validate, authenticateToken, authorizeAdmin, updateUser);
+app.post("/users",  authenticateToken, authorizeAdmin, createUser);
+app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
 app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
 
 app.get('/cart', authenticateToken, getCartByCustomerId);

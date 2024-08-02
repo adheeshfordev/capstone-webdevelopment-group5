@@ -9,11 +9,13 @@ const sendEmail = require('../utils/sendEmail');
 const adminLogin = async (req, res) => {
 	try {
 		const { email, password } = req.body;
+		
 		if (!email || !password) {
 			return res.status(400).json({ error: "Email and password are required" });
 		}
 
-		const authUser = await User.findOne({ email: email, userType: "admin" });
+		const authUser = await User.findOne({ email: email, userType: "admin" }, {_id:1, email:1, password:1});
+		console.log(authUser);
 		if (!authUser || !(await bcrypt.compare(password, authUser.password))) {
 			return res
 				.status(401)
@@ -35,7 +37,7 @@ const login = async (req, res) => {
 			return res.status(400).json({ error: "Email and password are required" });
 		}
 
-		const authUser = await User.findOne({ email: email });
+		const authUser = await User.findOne({ email: email }, {_id:1, email:1, password:1});
 		if (!authUser || !(await bcrypt.compare(password, authUser.password))) {
 			return res.status(401).json({ error: "Invalid username or password" });
 		}
