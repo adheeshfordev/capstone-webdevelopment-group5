@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.jsx';
 
 export default function SignIn() {
     const [error, setError] = useState(null);
@@ -75,6 +76,7 @@ export default function SignIn() {
                 {error && <p className='error-message'>{error}</p>}
                 {success && <p className='.success-message'>{success}</p>}
             </div>
+            <Footer/>
         </>
     );
 }

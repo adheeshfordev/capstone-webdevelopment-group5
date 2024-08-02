@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Header from '../components/Header.jsx'
+import Footer from '../components/Footer.jsx';
 
 export default function SignUp() {
     const [error, setError] = useState();
@@ -67,6 +68,7 @@ export default function SignUp() {
             {error && <p className='error-message'>{error}</p>}
             {success && <p className='.success-message'>{success}</p>}
         </div>
+        <Footer/>
     </>
   )
 }

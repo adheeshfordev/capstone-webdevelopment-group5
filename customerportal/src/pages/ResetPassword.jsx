@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header.jsx';
 import { useParams } from 'react-router-dom';
+import Footer from '../components/Footer.jsx';
 
 export default function ResetPassword() {
     const { token } = useParams();
@@ -57,6 +58,7 @@ export default function ResetPassword() {
                 {error && <p className='error-message'>{error}</p>}
                 {success && <p className='success-message'>{success}</p>}
             </div>
+            <Footer/>
         </>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.jsx';
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -56,6 +57,7 @@ export default function ForgotPassword() {
                 {error && <p className='error-message'>{error}</p>}
                 {success && <p className='success-message'>{success}</p>}
             </div>
+            <Footer />
         </>
     );
 }

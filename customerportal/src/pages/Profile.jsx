@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function Profile({ user }) {
     const [error, setError] = useState(null);
@@ -43,6 +44,7 @@ export default function Profile({ user }) {
                 {error && <p className='profile-error-message'>{error}</p>}
                 {success && <p className='profile-success-message'>{success}</p>}
             </div>
+            <Footer/>
         </>
     )
 }

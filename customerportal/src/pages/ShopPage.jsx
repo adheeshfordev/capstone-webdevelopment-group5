@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ProductList from '../components/ProductList';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 class ShopPage extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class ShopPage extends Component {
 
   fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:3000/products', {
+      const response = await fetch('http://localhost:5173/products', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -50,6 +51,7 @@ class ShopPage extends Component {
             )}
           </div>
         </div>
+        <Footer/>
       </div>
     );
   }

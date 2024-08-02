@@ -19,12 +19,129 @@ export default function Home() {
 						</div>
 						<div class="col-lg-7">
 							<div class="hero-img-wrap">
-								<img src="/src/images/couch.jfif" class="img-fluid" />
+								<img src="/src/images/banner.webp" class="img-fluid" />
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+		
+		<div class="product-section">
+			<div class="container">
+				<div class="row">
+
+					
+					<div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+						<h2 class="mb-4 section-title">Excellent Gaming.</h2>
+						<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. </p>
+						<p><a href="shop.html" class="btn">Explore</a></p>
+					</div> 
+					
+					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+						<a class="product-item" href="cart.html">
+							<img src="/src/images/product-1.jpg" class="img-fluid product-thumbnail"/>
+							<h3 class="product-title">Spider-Man Miles Morales</h3>
+							<strong class="product-price">$50.00</strong>
+
+							<span class="icon-cross">
+								<img src="/src/images/cross.svg" class="img-fluid"/>
+							</span>
+						</a>
+					</div> 
+					
+					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+						<a class="product-item" href="cart.html">
+							<img src="/src/images/product-2.jfif" class="img-fluid product-thumbnail"/>
+							<h3 class="product-title">NBA 2K</h3>
+							<strong class="product-price">$78.00</strong>
+
+							<span class="icon-cross">
+								<img src="/src/images/cross.svg" class="img-fluid"/>
+							</span>
+						</a>
+					</div>
+					
+					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+						<a class="product-item" href="cart.html">
+							<img src="/src/images/product-3.png" class="img-fluid product-thumbnail"/>
+							<h3 class="product-title">GOD Fall</h3>
+							<strong class="product-price">$43.00</strong>
+
+							<span class="icon-cross">
+								<img src="/src/images/cross.svg" class="img-fluid"/>
+							</span>
+						</a>
+					</div>
+					
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="why-choose-section">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-lg-6">
+						<h2 class="section-title">Why Choose Us</h2>
+						<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+
+						<div class="row my-5">
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="/src/images/truck.svg" alt="Image" class="imf-fluid"/>
+									</div>
+									<h3>Fast &amp; Free Shipping</h3>
+									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="/src/images/bag.svg" alt="Image" class="imf-fluid"/>
+									</div>
+									<h3>Easy to Shop</h3>
+									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="/src/images/support.svg" alt="Image" class="imf-fluid"/>
+									</div>
+									<h3>24/7 Support</h3>
+									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="/src/images/return.svg" alt="Image" class="imf-fluid"/>
+									</div>
+									<h3>Hassle Free Returns</h3>
+									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-5">
+						<div class="img-wrap">
+							<img src="/src/images/why-choose-us-img.png" alt="Image" class="img-fluid"/>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		
+		
 
         <Footer />
     </div>

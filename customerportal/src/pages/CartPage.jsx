@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer.jsx'
 import Cookies from 'js-cookie';
 
 class CartPage extends Component {
@@ -154,6 +155,7 @@ class CartPage extends Component {
             <p>Loading...</p>
           )}
         </div>
+        <Footer />
       </div>
     );
   }
