@@ -9,8 +9,21 @@ const userSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now }
   },
   {
-   collection: 'User'
+   collection: 'User',
+   toJSON: { virtuals: true }, 
  });
 
+ 
+
+ userSchema.virtual('id').get(function() {
+  return this._id.toHexString();
+});
+
+userSchema.set('toJSON', {
+  virtuals: true
+});
+userSchema.set('toObject', {
+  virtuals: true
+});
 const User = mongoose.model('User', userSchema);
 module.exports = User
