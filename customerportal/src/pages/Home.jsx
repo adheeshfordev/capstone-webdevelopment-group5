@@ -35,7 +35,7 @@ export default function Home() {
 					<div className="col-md-12 col-lg-3 mb-5 mb-lg-0">
 						<h2 className="mb-4 section-title">Excellent Gaming.</h2>
 						<p className="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. </p>
-						<p><a href="shop.html" className="btn">Explore</a></p>
+						<p><a href="/shop" className="btn">Explore</a></p>
 					</div> 
 					
 					<div className="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
