@@ -46,10 +46,16 @@ const wrappedRestProvider = {
 			})),
 		})),
 	update: (resource, params) =>
-		restProvider.update(resource, params).then((response) => ({
-			...response,
-			data: { ...response.data, id: response.data._id },
-		})),
+		restProvider
+			.update(resource, params)
+			.then((response) => ({
+				...response,
+				data: { ...response.data, id: response.data._id || response.data.id },
+			}))
+			.catch((error) => {
+				console.error("Update error:", error);
+				throw error.response ? { ...error, body: error.response.data } : error;
+			}),
 	create: (resource, params) =>
 		restProvider.create(resource, params).then((response) => ({
 			...response,

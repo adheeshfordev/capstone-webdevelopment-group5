@@ -9,7 +9,7 @@ const {
 	deleteProduct,
 	uploadProductImage,
 	getProduct,
-	searchProducts
+	searchProducts,
 } = require("./controllers/ProductController");
 const {
 	userList,
@@ -18,31 +18,31 @@ const {
 	deleteUser,
 	getUser,
 } = require("./controllers/UserController");
-const { 
-	clearCart, 
-	removeItemFromCart, 
-	updateCartItemQuantity, 
-	addItemToCart, 
-	getCartByCustomerId 
+const {
+	clearCart,
+	removeItemFromCart,
+	updateCartItemQuantity,
+	addItemToCart,
+	getCartByCustomerId,
 } = require("./controllers/CartController");
 const {
 	authenticateToken,
 	authorizeAdmin,
 } = require("./middleware/AuthMiddleware");
-const {
-	checkout
-} = require("./controllers/CheckoutController");
+const { checkout } = require("./controllers/CheckoutController");
 
 const {
 	productValidationRules,
 	userValidationRules,
-	validate
+	validate,
 } = require("./middleware/ValidationMiddleware");
-const { forgotPassword, resetPassword } = require('./controllers/AuthController');
-const { listOrders } = require('./controllers/OrderController');
+const {
+	forgotPassword,
+	resetPassword,
+} = require("./controllers/AuthController");
+const { listOrders } = require("./controllers/OrderController");
 
 const cors = require("cors");
-
 
 // get config vars
 dotenv.config();
@@ -89,31 +89,68 @@ app.post("/signup", signup);
 
 app.get("/products", productList);
 app.get("/products/:id", getProduct);
-app.post("/products", productValidationRules, validate, authenticateToken, authorizeAdmin, createProduct);
-app.post("/products/:id/upload", authenticateToken, authorizeAdmin, uploadProductImage);
-app.put("/products/:id", productValidationRules, validate, authenticateToken, authorizeAdmin, updateProduct);
+app.post(
+	"/products",
+	productValidationRules,
+	validate,
+	authenticateToken,
+	authorizeAdmin,
+	createProduct,
+);
+// app.post(
+// 	"/products/:id/upload",
+// 	authenticateToken,
+// 	authorizeAdmin,
+// 	uploadProductImage,
+// );
+app.put(
+	"/products/:id",
+	productValidationRules,
+	validate,
+	authenticateToken,
+	authorizeAdmin,
+	updateProduct,
+);
 app.delete("/products/:id", authenticateToken, authorizeAdmin, deleteProduct);
 
 app.get("/users", authenticateToken, authorizeAdmin, userList);
 app.get("/users/:id", authenticateToken, authorizeAdmin, getUser);
-app.post("/users",  authenticateToken, authorizeAdmin, createUser);
-app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
-app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
+app.post(
+	"/users",
+	userValidationRules,
+	authenticateToken,
+	authorizeAdmin,
+	createUser,
+);
+app.put(
+	"/users/:id",
+	userValidationRules,
+	validate,
+	authenticateToken,
+	authorizeAdmin,
+	updateUser,
+);
+app.delete(
+	"/users/:id",
+	userValidationRules,
+	authenticateToken,
+	authorizeAdmin,
+	deleteUser,
+);
 
-app.get('/cart', authenticateToken, getCartByCustomerId);
-app.post('/cart', authenticateToken,addItemToCart);
-app.put('/cart', authenticateToken, updateCartItemQuantity);
-app.delete('/cart/item', authenticateToken, removeItemFromCart);
-app.delete('/cart', authenticateToken, clearCart);
+app.get("/cart", authenticateToken, getCartByCustomerId);
+app.post("/cart", authenticateToken, addItemToCart);
+app.put("/cart", authenticateToken, updateCartItemQuantity);
+app.delete("/cart/item", authenticateToken, removeItemFromCart);
+app.delete("/cart", authenticateToken, clearCart);
 
-app.post('/checkout', authenticateToken, checkout);
+app.post("/checkout", authenticateToken, checkout);
 
-app.post('/forgot-password', forgotPassword);
-app.post('/reset-password', resetPassword);
+app.post("/forgot-password", forgotPassword);
+app.post("/reset-password", resetPassword);
 
-app.get('/orders', authenticateToken, authorizeAdmin, listOrders);
-app.get('/search', searchProducts);
-
+app.get("/orders", authenticateToken, authorizeAdmin, listOrders);
+app.get("/search", searchProducts);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 

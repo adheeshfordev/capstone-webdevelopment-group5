@@ -12,6 +12,9 @@ import {
 	SimpleForm,
 	TextField,
 	TextInput,
+	useNotify,
+	useRedirect,
+	useRefresh,
 } from "react-admin";
 
 import EggIcon from "@mui/icons-material/Egg";
@@ -38,21 +41,46 @@ export const ProductList = (props) => {
 	);
 };
 
-export const ProductEdit = (props) => (
-	<Edit {...props}>
-		<SimpleForm>
-			<TextInput source="name" />
-			<TextInput source="description" />
-			<NumberInput source="price" />
-			<TextInput source="category" />
-			<TextInput source="platform" />
-			<TextInput source="imageUrl" />
-			<TextInput source="developer" />
-			<TextInput source="publisher" />
-			<DateInput source="releaseDate" />
-		</SimpleForm>
-	</Edit>
-);
+export const ProductEdit = (props) => {
+	const notify = useNotify();
+	const refresh = useRefresh();
+	const redirect = useRedirect();
+
+	const onSuccess = () => {
+		notify("Product updated successfully", { type: "success" });
+		redirect("/products");
+		refresh();
+	};
+
+	const onError = (error) => {
+		if (error && error.body && error.body.errors) {
+			error.body.errors.forEach((err) => notify(err, { type: "error" }));
+		} else {
+			notify(`Error: ${error.message || "Could not update product"}`, {
+				type: "error",
+			});
+		}
+	};
+
+	return (
+		<Edit
+			{...props}
+			mutationOptions={{ onSuccess, onError, mutationMode: "pessimistic" }}
+		>
+			<SimpleForm>
+				<TextInput source="name" />
+				<TextInput source="description" />
+				<NumberInput source="price" />
+				<TextInput source="category" />
+				<TextInput source="platform" />
+				<TextInput source="imageUrl" />
+				<TextInput source="developer" />
+				<TextInput source="publisher" />
+				<DateInput source="releaseDate" />
+			</SimpleForm>
+		</Edit>
+	);
+};
 
 export const ProductCreate = (props) => (
 	<Create {...props}>
