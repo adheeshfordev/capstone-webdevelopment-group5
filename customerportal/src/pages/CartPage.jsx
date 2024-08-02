@@ -135,7 +135,7 @@ class CartPage extends Component {
                         type="number" 
                         value={item.quantity} 
                         min="1" 
-                        onChange={(e) => this.handleQuantityChange(item.product._id, parseInt(e.target.value))}
+                        onBlur={(e) => this.handleQuantityChange(item.product._id, parseInt(e.target.value))}
                       />
                     </p>
                     
