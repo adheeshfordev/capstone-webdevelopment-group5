@@ -155,10 +155,9 @@ const deleteUser = async (req, res) => {
     }
 };
 
-// Get a single user
-const getUser = async (req, res) => {
+const getUserProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id, { password: 0 });
+        const user = await User.findById(req.user._id, { password: 0 });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -203,5 +202,17 @@ const updateUserProfile = [
         }
     }
 ];
-
-module.exports = { getUser, userList, createUser, updateUser, deleteUser, updateUserProfile };
+// Get a single user
+const getUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id, { password: 0 });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json( user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+module.exports = { getUser, userList, createUser, updateUser, deleteUser, updateUserProfile, getUserProfile };

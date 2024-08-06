@@ -1,18 +1,48 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Cookies from 'js-cookie';
 
-export default function Profile({ user }) {
+export default function Profile() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [profileData, setProfileData] = useState({
-        email: user?.email || '',
-        firstName: user?.firstName || '',
-        lastName: user?.lastName || '',
+        email: '',
+        firstName: '',
+        lastName: '',
     });
 
     const [file, setFile] = useState(null);
     const fileRef = useRef(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/users/profile', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': Cookies.get('token'),
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+
+                const result = await response.json();
+                setProfileData({
+                    email: result.email,
+                    firstName: result.firstName,
+                    lastName: result.lastName,
+                });
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     const onChangeData = (event) => {
         setProfileData({
@@ -31,7 +61,7 @@ export default function Profile({ user }) {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `${localStorage.getItem('token')}`, // Adjust based on your auth method
+                    'Authorization': `Bearer ${Cookies.get('token')}`, // Adjust based on your auth method
                 },
                 body: JSON.stringify(profileData),
             });
@@ -58,7 +88,7 @@ export default function Profile({ user }) {
                 <form className="profile-form" onSubmit={handleSubmit}>
                     <div className='profile-flex profile-flex-col profile-justify-center profile-text-center'>
                         <input type='file' ref={fileRef} onChange={(e) => { setFile(e.target.files[0]) }} hidden accept='image/*' />
-                        <span className='profile-text-gray-800 profile-mt-2 profile-mb-4 profile-underline profile-font-bold'>{user ? user.username : 'Loading...'}</span>
+                        <span className='profile-text-gray-800 profile-mt-2 profile-mb-4 profile-underline profile-font-bold'>{profileData.username || 'Loading...'}</span>
                     </div>
 
                     <input

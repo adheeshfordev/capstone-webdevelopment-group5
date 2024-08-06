@@ -18,6 +18,7 @@ const {
 	deleteUser,
 	getUser,
 	updateUserProfile,
+	getUserProfile,
 } = require("./controllers/UserController");
 const {
 	clearCart,
@@ -108,11 +109,12 @@ app.put("/products/:id", authenticateToken, authorizeAdmin, updateProduct);
 app.delete("/products/:id", authenticateToken, authorizeAdmin, deleteProduct);
 
 app.get("/users", authenticateToken, authorizeAdmin, userList);
-app.get("/users/:id", authenticateToken, authorizeAdmin, getUser);
 app.post("/users", authenticateToken, authorizeAdmin, createUser);
-app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
 app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
 app.put("/users/profile", authenticateToken, updateUserProfile);
+app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
+app.get("/users/profile", authenticateToken, getUserProfile);
+app.get("/users/:id", authenticateToken, authorizeAdmin, getUser);
 
 app.get("/cart", authenticateToken, getCartByCustomerId);
 app.post("/cart", authenticateToken, addItemToCart);
