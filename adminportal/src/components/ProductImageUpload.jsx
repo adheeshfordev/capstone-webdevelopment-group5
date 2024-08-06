@@ -47,7 +47,7 @@ const ProductImageUpload = () => {
 
         const formData = new FormData();
         formData.append('image', imageFile);
-        console.log(imageFile);
+
         try {
             await fetch(`http://localhost:3000/products/${selectedProduct}/upload`, {
                 method: 'POST',
