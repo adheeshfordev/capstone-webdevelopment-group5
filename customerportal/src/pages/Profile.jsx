@@ -61,7 +61,7 @@ export default function Profile() {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${Cookies.get('token')}`, // Adjust based on your auth method
+                    'Authorization': Cookies.get('token')
                 },
                 body: JSON.stringify(profileData),
             });
@@ -88,7 +88,7 @@ export default function Profile() {
                 <form className="profile-form" onSubmit={handleSubmit}>
                     <div className='profile-flex profile-flex-col profile-justify-center profile-text-center'>
                         <input type='file' ref={fileRef} onChange={(e) => { setFile(e.target.files[0]) }} hidden accept='image/*' />
-                        <span className='profile-text-gray-800 profile-mt-2 profile-mb-4 profile-underline profile-font-bold'>{profileData.username || 'Loading...'}</span>
+                        <span className='profile-text-gray-800 profile-mt-2 profile-mb-4 profile-underline profile-font-bold'>{profileData.email || 'Loading...'}</span>
                     </div>
 
                     <input
