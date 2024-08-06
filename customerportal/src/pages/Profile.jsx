@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Cookies from 'js-cookie';
@@ -14,6 +15,7 @@ export default function Profile() {
 
     const [file, setFile] = useState(null);
     const fileRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -38,11 +40,12 @@ export default function Profile() {
                 });
             } catch (error) {
                 setError(error.message);
+                navigate('/signin');
             }
         };
 
         fetchUserData();
-    }, []);
+    }, [navigate]);
 
     const onChangeData = (event) => {
         setProfileData({
