@@ -49,7 +49,7 @@ const ProductImageUpload = () => {
         formData.append('image', imageFile);
         console.log(imageFile);
         try {
-            await dataProvider.create(`products/${selectedProduct}/upload`, {
+            await fetch(`http://localhost:3000/products/${selectedProduct}/upload`, {
                 method: 'POST',
                 body: formData,
                 headers: new Headers({
