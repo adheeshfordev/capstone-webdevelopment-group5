@@ -17,6 +17,7 @@ const {
 	updateUser,
 	deleteUser,
 	getUser,
+	updateUserProfile,
 } = require("./controllers/UserController");
 const {
 	clearCart,
@@ -111,6 +112,7 @@ app.get("/users/:id", authenticateToken, authorizeAdmin, getUser);
 app.post("/users", authenticateToken, authorizeAdmin, createUser);
 app.put("/users/:id", authenticateToken, authorizeAdmin, updateUser);
 app.delete("/users/:id", authenticateToken, authorizeAdmin, deleteUser);
+app.put("/users/profile", authenticateToken, updateUserProfile);
 
 app.get("/cart", authenticateToken, getCartByCustomerId);
 app.post("/cart", authenticateToken, addItemToCart);
