@@ -120,8 +120,12 @@ app.delete("/cart", authenticateToken, clearCart);
 
 app.post("/checkout", authenticateToken, checkout);
 
-app.post("/forgot-password", forgotPassword);
-app.post("/reset-password", resetPassword);
+app.post('/forgot-password', forgotPassword);
+app.post('/reset-password', resetPassword);
+
+app.get('/orders', authenticateToken, authorizeAdmin, listOrders);
+app.get('/products/search', searchProducts);
+
 
 app.get("/orders", authenticateToken, authorizeAdmin, listOrders);
 app.get("/search", searchProducts);
