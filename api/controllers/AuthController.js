@@ -67,7 +67,7 @@ const generateAndSaveToken = async (user) => {
 
 const generateAccessToken = (username) => {
 	const tokenSecret = process.env.TOKEN_SECRET;
-	return jwt.sign({ name: username }, tokenSecret, { expiresIn: 86400 });
+	return jwt.sign({ name: username }, tokenSecret, { expiresIn: "24h" });
 };
 
 const signup = async (req, res) => {
