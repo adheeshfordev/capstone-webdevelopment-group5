@@ -131,4 +131,4 @@ app.get("/search", searchProducts);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
-module.exports.handler = serverless(app);
+module.exports.handler = serverless(app); 
