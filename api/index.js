@@ -131,4 +131,4 @@ app.get("/search", searchProducts);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
-export const handler = serverless(app);
+const handler = serverless(app);
