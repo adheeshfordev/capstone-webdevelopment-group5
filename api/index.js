@@ -1,4 +1,5 @@
-const express = require("express");
+import express, { Router } from "express";
+import serverless from "serverless-http";
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const { adminLogin, login, signup } = require("./controllers/AuthController");
@@ -129,7 +130,4 @@ app.get("/search", searchProducts);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-	console.log("Server Listening on PORT:", PORT);
-});
+export const handler = serverless(app);
