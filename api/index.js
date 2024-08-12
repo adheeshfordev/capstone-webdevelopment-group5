@@ -1,5 +1,6 @@
-import express, { Router } from "express";
-import serverless from "serverless-http";
+const express = require("express");
+const { Router } = express;
+const serverless = require("serverless-http");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const { adminLogin, login, signup } = require("./controllers/AuthController");
