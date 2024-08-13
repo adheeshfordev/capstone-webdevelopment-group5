@@ -18,6 +18,14 @@ const userValidationRules = () => [
     body('userType').optional().isIn(['user', 'admin']).withMessage('Invalid user type')
 ];
 
+// Validation rules
+const updateUserValidationRules = () => [
+    body('email').isEmail().withMessage('Please provide a valid email'),
+    body('firstName').not().isEmpty().withMessage('First name is required'),
+    body('lastName').not().isEmpty().withMessage('Last name is required'),
+    body('userType').optional().isIn(['user', 'admin']).withMessage('Invalid user type')
+];
+
 const validate = (req, res, next) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
@@ -94,7 +102,7 @@ const createUser = [
 
 // Update an existing user
 const updateUser = [
-    userValidationRules(),
+    updateUserValidationRules(),
     validate,
     async (req, res) => {
         try {

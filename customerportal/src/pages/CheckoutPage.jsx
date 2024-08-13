@@ -132,7 +132,7 @@ const CheckoutPage = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="address">Customer Address:</label>
+                <label htmlFor="address">Shipping Address:</label>
                 <input
                   type="text"
                   className="form-control"
