@@ -89,7 +89,7 @@ const CheckoutPage = () => {
                 <div key={item.product._id} className="card mb-3">
                   <div className="row no-gutters">
                     <div className="col-md-4">
-                      <img src={item.product.imageUrl} className="card-img" alt={item.product.name} />
+                      <img src={item.imageUrl} className="card-img" alt={item.product.name} />
                     </div>
                     <div className="col-md-8">
                       <div className="card-body">
