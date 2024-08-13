@@ -2,6 +2,8 @@ const nodemailer = require('nodemailer');
 const dotenv = require("dotenv");
 dotenv.config();
 
+const decodedPassword = Buffer.from(process.env.EMAIL_PASSWORD, 'base64').toString('utf8');
+
 
 const sendEmail = async (to, subject, text) => {
 
@@ -10,7 +12,7 @@ const sendEmail = async (to, subject, text) => {
       service: 'gmail',
       auth: {
           user: process.env.EMAIL, 
-          pass: process.env.EMAIL_PASSWORD,
+          pass: decodedPassword,
       },
   });
 
