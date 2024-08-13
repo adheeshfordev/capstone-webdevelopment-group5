@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
-const Cart = require('../models/Cart'); // Assuming you have a Cart model
+const Cart = require('../models/Cart');
 const Product = require('../models/Product');
+const {processImageUrl} = require('../utils/firebase') 
 
 const checkout = async (req, res) => {
   try {
@@ -21,7 +22,8 @@ const checkout = async (req, res) => {
       items: cart.items.map(item => ({
         product: item.product._id,
         quantity: item.quantity,
-        price: item.product.price
+        price: item.product.price,
+        imageUrl: processImageUrl(item.product.imageUrl)
       })),
       total,
     });

@@ -1,6 +1,7 @@
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const { body, validationResult, param } = require('express-validator');
+const {processImageUrl} = require('../utils/firebase') 
 
 // Validation rules
 const validateCart = (method) => {
@@ -67,7 +68,7 @@ const addItemToCart = [
             if (!cart) {
                 cart = new Cart({
                     customer: req.user._id,
-                    items: [{ product: productId, quantity, price: product.price }]
+                    items: [{ product: productId, quantity, price: product.price, imageUrl: processImageUrl(product.imageUrl) }]
                 });
             } else {
                 const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
@@ -76,7 +77,7 @@ const addItemToCart = [
                     cart.items[itemIndex].quantity += quantity;
                     cart.items[itemIndex].price = product.price;
                 } else {
-                    cart.items.push({ product: productId, quantity, price: product.price });
+                    cart.items.push({ product: productId, quantity, price: product.price, imageUrl: processImageUrl(product.imageUrl) });
                 }
             }
 

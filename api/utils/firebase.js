@@ -14,4 +14,15 @@ firebaseAdmin.initializeApp({
 
 const bucket = firebaseAdmin.storage().bucket();
 
-module.exports = { bucket };
+const convertGsToHttps = (gsUrl) => {
+	const bucketName = "pixelparadisecapstone.appspot.com";
+	const filePath = gsUrl.split(`${bucketName}/`)[1];
+	return `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(filePath)}?alt=media`;
+  };
+  
+  const processImageUrl = (imageUrl) => {
+	return imageUrl ? convertGsToHttps(imageUrl) : 
+	convertGsToHttps("gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg");
+  }
+
+module.exports = { bucket, processImageUrl };
