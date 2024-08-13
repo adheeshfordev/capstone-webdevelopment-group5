@@ -82,7 +82,7 @@ const addItemToCart = [
 
             cart.updatedAt = new Date();
             await cart.save();
-            cart = await Cart.find({ _id: cart._id }).populate('items.product');
+            cart = await Cart.findOne({ _id: cart._id }).populate('items.product');
             res.status(201).json(cart);
         } catch (error) {
             console.log(error);
@@ -110,7 +110,7 @@ const updateCartItemQuantity = [
                 cart.items[itemIndex].quantity = quantity;
                 cart.updatedAt = new Date();
                 await cart.save();
-                cart = await Cart.find({ _id: cart._id }).populate('items.product');
+                cart = await Cart.findOne({ _id: cart._id }).populate('items.product');
                 res.json(cart);
             } else {
                 return res.status(404).json({ error: 'Product not found in cart' });
@@ -139,7 +139,7 @@ const removeItemFromCart = [
             cart.items = cart.items.filter(item => item.product.toString() !== productId);
             cart.updatedAt = new Date();
             await cart.save();
-            cart = await Cart.find({ _id: cart._id }).populate('items.product');
+            cart = await Cart.findOne({ _id: cart._id }).populate('items.product');
             res.json(cart);
         } catch (error) {
             console.log(error);
