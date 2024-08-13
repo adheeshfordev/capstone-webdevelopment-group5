@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3000"; // Your API base URL
+const apiUrl = "https://capstone-webdevelopment-group5-api.onrender.com"; // Your API base URL
 
 const authProvider = {
 	login: ({ username, password }) => {

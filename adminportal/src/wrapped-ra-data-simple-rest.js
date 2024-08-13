@@ -1,7 +1,7 @@
 import simpleRestProvider from "ra-data-simple-rest";
 import { fetchUtils } from "react-admin";
 
-const apiUrl = "http://localhost:3000"; // Your API base URL
+const apiUrl = "https://capstone-webdevelopment-group5-api.onrender.com"; // Your API base URL
 
 const httpClient = (url, options = {}) => {
 	if (!options.headers) {

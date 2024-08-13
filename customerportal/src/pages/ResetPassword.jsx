@@ -17,7 +17,7 @@ export default function ResetPassword() {
         evt.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/reset-password', {
+            const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/reset-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
