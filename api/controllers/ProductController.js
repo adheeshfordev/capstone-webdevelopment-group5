@@ -12,7 +12,6 @@ const productValidationRules = () => [
   body('price').isNumeric().withMessage('Price must be a number'),
   body('category').not().isEmpty().withMessage('Category is required'),
   body('platform').not().isEmpty().withMessage('Platform is required'),
-  body('imageUrl').isURL().withMessage('Invalid URL for image'),
   body('developer').not().isEmpty().withMessage('Developer is required'),
   body('publisher').not().isEmpty().withMessage('Publisher is required'),
   body('releaseDate').isDate().withMessage('Invalid release date')
