@@ -8,17 +8,13 @@ const authenticateToken = async (req, res, next) => {
     const token = authHeader;
 
     if (!token) return res.sendStatus(401);
-    console.log('here1');
 
     try {
         const tokenDoc = await Token.findOne({ token });
-        console.log('here2');
-
 
         if (!tokenDoc) {
             return res.sendStatus(403);
         }
-        console.log('here3');
 
 
          console.log(new Date(tokenDoc.createdAt).getTime() + (86400 * 1000));

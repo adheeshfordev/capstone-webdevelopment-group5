@@ -80,7 +80,7 @@ const addItemToCart = [
                     cart.items.push({ product: productId, quantity, price: product.price, imageUrl: processImageUrl(product.imageUrl) });
                 }
             }
-
+            console.log(cart.items);
             cart.updatedAt = new Date();
             await cart.save();
             res.status(201).json(cart);
