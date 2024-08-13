@@ -86,8 +86,6 @@ app.get("/products", productList);
 app.get("/products/:id", getProduct);
 app.post(
 	"/products",
-	productValidationRules,
-	validate,
 	authenticateToken,
 	authorizeAdmin,
 	createProduct,
