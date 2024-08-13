@@ -12,8 +12,8 @@ export const OrderList = (props) => {
         <List {...props}>
             <Datagrid>
                 <TextField source="customer.email" label="Customer Email" />
-                <TextField source="customer.firstName" label="Customer First Name" />
-                <TextField source="customer.lastName" label="Customer Last Name" />
+                <TextField source="customerName" label="Customer Name" />
+                <TextField source="customerAddress" label="Shipping Address" />
                 <NumberField source="total" label="Total Amount" />
                 <TextField source="status" />
                 <DateField source="createdAt" />
