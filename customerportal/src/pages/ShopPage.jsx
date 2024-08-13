@@ -18,7 +18,7 @@ class ShopPage extends Component {
 
   fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:3000/products', {
+      const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/products', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ export default function SignUp() {
         
         try {
             console.log(signUpData);
-            const response = await fetch('http://localhost:3000/signup', {
+            const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

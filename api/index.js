@@ -66,14 +66,7 @@ app.use(
 		exposedHeaders: ["Content-Range"],
 	}),
 );
-
-app.get("/", (request, response) => {
-	const status = {
-		Error: "Invalid request method for this URL",
-	};
-
-	response.send(status);
-});
+app.get("/", (req, res) => res.send("Express on Vercel"));
 app.get("/status", (request, response) => {
 	const status = {
 		Status: "Running",

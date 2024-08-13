@@ -18,7 +18,7 @@ class CartPage extends Component {
 
   fetchCart = async () => {
     try {
-      const response = await fetch('http://localhost:3000/cart', {
+      const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ class CartPage extends Component {
 
   handleQuantityChange = async (productId, quantity) => {
     try {
-      const response = await fetch('http://localhost:3000/cart', {
+      const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ class CartPage extends Component {
 
   handleRemoveItem = async (productId) => {
     try {
-      const response = await fetch('http://localhost:3000/cart/item', {
+      const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart/item', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ class CartPage extends Component {
 
   handleClearCart = async () => {
     try {
-      const response = await fetch('http://localhost:3000/cart', {
+      const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -15,7 +15,7 @@ export default function ForgotPassword() {
         evt.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/forgot-password', {
+            const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/forgot-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

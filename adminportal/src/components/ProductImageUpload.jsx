@@ -49,7 +49,7 @@ const ProductImageUpload = () => {
         formData.append('image', imageFile);
 
         try {
-            await fetch(`http://localhost:3000/products/${selectedProduct}/upload`, {
+            await fetch(`https://capstone-webdevelopment-group5-api.onrender.com/products/${selectedProduct}/upload`, {
                 method: 'POST',
                 body: formData,
                 headers: new Headers({

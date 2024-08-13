@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 function ProductItem({ product }) {
   const addToCart = async (productId) => {
     try {
-      const response = await fetch('http://localhost:3000/cart', {
+      const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
