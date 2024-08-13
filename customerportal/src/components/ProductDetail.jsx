@@ -43,7 +43,7 @@ function ProductDetail() {
 
   const handleAddToCart = async () => {
     try {
-      const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com//cart', {
+      const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
