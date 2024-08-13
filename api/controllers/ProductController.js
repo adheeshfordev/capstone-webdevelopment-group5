@@ -76,7 +76,7 @@ const createProduct = [
   async (req, res) => {
     try {
       const product = new Product(req.body);
-      if (product.imageUrl) {
+      if (!product.imageUrl) {
         product.imageUrl = "gs://pixelparadisecapstone.appspot.com/lander-denys-J72jCU2HuAM-unsplash.jpg";
       }
       await product.save();
