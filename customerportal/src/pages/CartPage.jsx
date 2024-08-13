@@ -44,8 +44,16 @@ class CartPage extends Component {
     }
   };
 
-  handleQuantityChange = async (productId, quantity) => {
+  handleQuantityChange = async (productId, change) => {
+    console.log(productId);
     try {
+      const currentQuantity = this.state.cart.items.find(item => item.product._id === productId).quantity;
+      const newQuantity = currentQuantity + change;
+
+      if (newQuantity <= 0) {
+        return this.handleRemoveItem(productId); // If quantity is less than or equal to 0, remove the item
+      }
+
       const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
         method: 'PUT',
         headers: {
@@ -55,11 +63,12 @@ class CartPage extends Component {
         body: JSON.stringify({
           customerId: this.state.cart.customer,
           productId,
-          quantity,
+          quantity: newQuantity,
         }),
       });
 
       const data = await response.json();
+      console.log(data);
       if (response.ok) {
         this.setState({ cart: data });
       } else {
@@ -69,6 +78,7 @@ class CartPage extends Component {
       this.setState({ error: error.message || 'An error occurred while updating the cart item' });
     }
   };
+
 
   handleRemoveItem = async (productId) => {
     try {
@@ -128,20 +138,29 @@ class CartPage extends Component {
               <div>
                 {cart.items.map(item => (
                   <div key={item.product._id} className="row cart-item">
-                    <h2 className="col-md-9">{item.product.name}</h2>
-                    <p className="col-md-1">Price: ${item.price.toFixed(2)}</p>
-                    <p className="col-md-1">Quantity: 
-                      <input 
-                        type="number" 
-                        value={item.quantity} 
-                        min="1" 
-                        onBlur={(e) => this.handleQuantityChange(item.product._id, parseInt(e.target.value))}
-                      />
-                    </p>
-                    
-                    <button className="btn btn-danger px-1 col-md-1" onClick={() => this.handleRemoveItem(item.product._id)}>Remove</button>
+                    <h2 className="col-md-7">{item.product.name}</h2>
+                    <p className="col-md-2">Price: ${item.price.toFixed(2)}</p>
+                    <div className="col-md-2 d-flex align-items-center">
+                      <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => this.handleQuantityChange(item.product._id, -1)}
+                        disabled={item.quantity <= 1}
+                      >-</button>
+                      <p className="m-0 mx-2">{item.quantity}</p>
+                      <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => this.handleQuantityChange(item.product._id, 1)}
+                      >+</button>
+                    </div>
+                    <button
+                      className="btn btn-danger px-1 col-md-1"
+                      onClick={() => this.handleRemoveItem(item.product._id)}
+                    >
+                      Remove
+                    </button>
                   </div>
                 ))}
+
                 <div className="cart-total">
                   <h3>Total: ${cart.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
                 </div>
