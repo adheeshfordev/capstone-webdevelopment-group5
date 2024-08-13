@@ -19,6 +19,8 @@ const checkout = async (req, res) => {
 
     const order = new Order({
       customer: customerId,
+      customerName: req.body.name, 
+      customerAddress: req.body.address,
       items: cart.items.map(item => ({
         product: item.product._id,
         quantity: item.quantity,
