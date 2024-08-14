@@ -13,8 +13,7 @@ const productValidationRules = () => [
   body('category').not().isEmpty().withMessage('Category is required'),
   body('platform').not().isEmpty().withMessage('Platform is required'),
   body('developer').not().isEmpty().withMessage('Developer is required'),
-  body('publisher').not().isEmpty().withMessage('Publisher is required'),
-  body('releaseDate').isDate().withMessage('Invalid release date')
+  body('publisher').not().isEmpty().withMessage('Publisher is required')
 ];
 
 const validate = (req, res, next) => {
