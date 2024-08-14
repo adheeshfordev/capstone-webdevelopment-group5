@@ -145,7 +145,7 @@ const CartPage = () => {
                     >+</button>
                   </div>
                   <i
-                    className="fa fa-trash px-1 col-md-1"
+                    className="fa fa-trash px-1 col-md-1 trash-icon"
                     onClick={() => handleRemoveItem(item.product._id)}
                   />
                 </div>

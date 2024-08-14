@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+.trash-icon {
+  font-size: 1.5rem; 
+  cursor: pointer; 
+  color: #dc3545;
+}
+
+.trash-icon:hover {
+  color: #bd2130; 
+}
