@@ -1,23 +1,19 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer.jsx'
+import Footer from '../components/Footer';
 import Cookies from 'js-cookie';
-import { Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-class CartPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cart: null,
-      error: null,
-    };
-  }
+const CartPage = () => {
+  const [cart, setCart] = useState(null);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  componentDidMount() {
-    this.fetchCart();
-  }
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
-  fetchCart = async () => {
+  const fetchCart = async () => {
     try {
       const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
         method: 'GET',
@@ -26,33 +22,31 @@ class CartPage extends Component {
           'Authorization': Cookies.get('token'),
         },
       });
-
-      const data = await response.json();
-
       if (response.status === 403) {
-        this.props.history.push('/signin');
+        console.log(response.status);
+        navigate('/signin');
         return;
       }
-
+      const data = await response.json();
 
       if (response.ok) {
-        this.setState({ cart: data });
+        setCart(data);
       } else {
-        this.setState({ error: data.message || 'Failed to fetch cart' });
+        setError(data.message || 'Failed to fetch cart');
       }
     } catch (error) {
-      this.setState({ error: error.message || 'An error occurred while fetching the cart' });
+      setError(error.message || 'An error occurred while fetching the cart');
     }
   };
 
-  handleQuantityChange = async (productId, change) => {
+  const handleQuantityChange = async (productId, change) => {
     console.log(productId);
     try {
-      const currentQuantity = this.state.cart.items.find(item => item.product._id === productId).quantity;
+      const currentQuantity = cart.items.find(item => item.product._id === productId).quantity;
       const newQuantity = currentQuantity + change;
 
       if (newQuantity <= 0) {
-        return this.handleRemoveItem(productId); // If quantity is less than or equal to 0, remove the item
+        return handleRemoveItem(productId); // If quantity is less than or equal to 0, remove the item
       }
 
       const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
@@ -62,7 +56,7 @@ class CartPage extends Component {
           'Authorization': Cookies.get('token'),
         },
         body: JSON.stringify({
-          customerId: this.state.cart.customer,
+          customerId: cart.customer,
           productId,
           quantity: newQuantity,
         }),
@@ -71,17 +65,16 @@ class CartPage extends Component {
       const data = await response.json();
       console.log(data);
       if (response.ok) {
-        this.setState({ cart: data });
+        setCart(data);
       } else {
-        this.setState({ error: data.message || 'Failed to update cart item' });
+        setError(data.message || 'Failed to update cart item');
       }
     } catch (error) {
-      this.setState({ error: error.message || 'An error occurred while updating the cart item' });
+      setError(error.message || 'An error occurred while updating the cart item');
     }
   };
 
-
-  handleRemoveItem = async (productId) => {
+  const handleRemoveItem = async (productId) => {
     try {
       const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart/item', {
         method: 'DELETE',
@@ -94,16 +87,16 @@ class CartPage extends Component {
 
       const data = await response.json();
       if (response.ok) {
-        this.setState({ cart: data });
+        setCart(data);
       } else {
-        this.setState({ error: data.message || 'Failed to remove cart item' });
+        setError(data.message || 'Failed to remove cart item');
       }
     } catch (error) {
-      this.setState({ error: error.message || 'An error occurred while removing the cart item' });
+      setError(error.message || 'An error occurred while removing the cart item');
     }
   };
 
-  handleClearCart = async () => {
+  const handleClearCart = async () => {
     try {
       const response = await fetch('https://capstone-webdevelopment-group5-api.onrender.com/cart', {
         method: 'DELETE',
@@ -115,70 +108,66 @@ class CartPage extends Component {
 
       const data = await response.json();
       if (response.ok) {
-        this.setState({ cart: data });
+        setCart(data);
       } else {
-        this.setState({ error: data.message || 'Failed to clear cart' });
+        setError(data.message || 'Failed to clear cart');
       }
     } catch (error) {
-      this.setState({ error: error.message || 'An error occurred while clearing the cart' });
+      setError(error.message || 'An error occurred while clearing the cart');
     }
   };
 
-  render() {
-    const { cart, error } = this.state;
-
-    return (
-      <div className="cart-page">
-        <Header />
-        <div className="container mb-5">
-          <h1>Cart</h1>
-          {error ? (
-            <p className="error-message">{error}</p>
-          ) : cart ? (
-            cart.items.length > 0 ? (
-              <div>
-                {cart.items.map(item => (
-                  <div key={item.product._id} className="row cart-item">
-                    <h2 className="col-md-7">{item.product.name}</h2>
-                    <p className="col-md-2">Price: ${item.price.toFixed(2)}</p>
-                    <div className="col-md-2 d-flex align-items-center">
-                      <button
-                        className="btn btn-outline-secondary"
-                        onClick={() => this.handleQuantityChange(item.product._id, -1)}
-                        disabled={item.quantity <= 1}
-                      >-</button>
-                      <p className="m-0 mx-2">{item.quantity}</p>
-                      <button
-                        className="btn btn-outline-secondary"
-                        onClick={() => this.handleQuantityChange(item.product._id, 1)}
-                      >+</button>
-                    </div>
+  return (
+    <div className="cart-page">
+      <Header />
+      <div className="container mb-5">
+        <h1>Cart</h1>
+        {error ? (
+          <p className="error-message">{error}</p>
+        ) : cart ? (
+          cart.items.length > 0 ? (
+            <div>
+              {cart.items.map(item => (
+                <div key={item.product._id} className="row cart-item">
+                  <h2 className="col-md-7">{item.product.name}</h2>
+                  <p className="col-md-2">Price: ${item.price.toFixed(2)}</p>
+                  <div className="col-md-2 d-flex align-items-center">
                     <button
-                      className="btn btn-danger px-1 col-md-1"
-                      onClick={() => this.handleRemoveItem(item.product._id)}
-                    >
-                      Remove
-                    </button>
+                      className="btn btn-outline-secondary"
+                      onClick={() => handleQuantityChange(item.product._id, -1)}
+                      disabled={item.quantity <= 1}
+                    >-</button>
+                    <p className="m-0 mx-2">{item.quantity}</p>
+                    <button
+                      className="btn btn-outline-secondary"
+                      onClick={() => handleQuantityChange(item.product._id, 1)}
+                    >+</button>
                   </div>
-                ))}
-
-                <div className="cart-total">
-                  <h3>Total: ${cart.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
+                  <button
+                    className="btn btn-danger px-1 col-md-1"
+                    onClick={() => handleRemoveItem(item.product._id)}
+                  >
+                    Remove
+                  </button>
                 </div>
-                <button className="btn btn-danger" onClick={this.handleClearCart}>Clear Cart</button>
-                <a className="btn" href="/checkout">Checkout</a>
+              ))}
+
+              <div className="cart-total">
+                <h3>Total: ${cart.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
               </div>
-            ) : (
-              <div>No products to display</div>
-            )
+              <button className="btn btn-danger" onClick={handleClearCart}>Clear Cart</button>
+              <a className="btn" href="/checkout">Checkout</a>
+            </div>
           ) : (
-            <p>Loading...</p>
-          )}
-        </div>
-        <Footer />
+            <div>No products to display</div>
+          )
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
-    );
-  }
-}
+      <Footer />
+    </div>
+  );
+};
 
 export default CartPage;
