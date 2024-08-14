@@ -40,7 +40,6 @@ const CartPage = () => {
   };
 
   const handleQuantityChange = async (productId, change) => {
-    console.log(productId);
     try {
       const currentQuantity = cart.items.find(item => item.product._id === productId).quantity;
       const newQuantity = currentQuantity + change;
@@ -63,7 +62,6 @@ const CartPage = () => {
       });
 
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         setCart(data);
       } else {
@@ -128,8 +126,11 @@ const CartPage = () => {
           cart.items.length > 0 ? (
             <div>
               {cart.items.map(item => (
-                <div key={item.product._id} className="row cart-item">
-                  <h2 className="col-md-7">{item.product.name}</h2>
+                <div key={item.product._id} className="row cart-item mb-4">
+                  <div className="col-md-2">
+                    <img src={item.imageUrl} alt={item.product.name} className="img-fluid" />
+                  </div>
+                  <h2 className="col-md-5">{item.product.name}</h2>
                   <p className="col-md-2">Price: ${item.price.toFixed(2)}</p>
                   <div className="col-md-2 d-flex align-items-center">
                     <button
@@ -143,12 +144,10 @@ const CartPage = () => {
                       onClick={() => handleQuantityChange(item.product._id, 1)}
                     >+</button>
                   </div>
-                  <button
-                    className="btn btn-danger px-1 col-md-1"
+                  <i
+                    className="fa fa-trash px-1 col-md-1"
                     onClick={() => handleRemoveItem(item.product._id)}
-                  >
-                    Remove
-                  </button>
+                  />
                 </div>
               ))}
 
@@ -156,7 +155,7 @@ const CartPage = () => {
                 <h3>Total: ${cart.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
               </div>
               <button className="btn btn-danger" onClick={handleClearCart}>Clear Cart</button>
-              <a className="btn" href="/checkout">Checkout</a>
+              <a className="btn btn-primary ml-2" href="/checkout">Checkout</a>
             </div>
           ) : (
             <div>No products to display</div>
