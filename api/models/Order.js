@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema({
       }
     ],
     total: { type: Number, required: true },
-    status: { type: String, default: 'pending' },
+    status: { type: String, default: 'completed' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });
