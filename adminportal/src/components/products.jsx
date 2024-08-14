@@ -12,6 +12,7 @@ import {
 	SimpleForm,
 	TextField,
 	TextInput,
+	required
 } from "react-admin";
 
 import EggIcon from "@mui/icons-material/Egg";
@@ -41,14 +42,14 @@ export const ProductList = (props) => {
 export const ProductEdit = (props) => (
 	<Edit {...props}>
 		<SimpleForm>
-			<TextInput source="name" />
-			<TextInput source="description" />
-			<NumberInput source="price" />
-			<TextInput source="category" />
-			<TextInput source="platform" />
+			<TextInput source="name" validate={required()} />
+			<TextInput source="description" validate={required()} />
+			<NumberInput source="price" validate={required()} />
+			<TextInput source="category" validate={required()} />
+			<TextInput source="platform" validate={required()} />
 			<TextInput source="imageUrl" />
-			<TextInput source="developer" />
-			<TextInput source="publisher" />
+			<TextInput source="developer" validate={required()} />
+			<TextInput source="publisher" validate={required()} />
 			<DateInput source="releaseDate" />
 		</SimpleForm>
 	</Edit>
@@ -57,14 +58,14 @@ export const ProductEdit = (props) => (
 export const ProductCreate = (props) => (
 	<Create {...props}>
 		<SimpleForm>
-			<TextInput source="name" />
-			<TextInput source="description" />
-			<NumberInput source="price" />
-			<TextInput source="category" />
-			<TextInput source="platform" />
+			<TextInput source="name" validate={required()} />
+			<TextInput source="description" validate={required()} />
+			<NumberInput source="price" validate={required()} />
+			<TextInput source="category" validate={required()} />
+			<TextInput source="platform" validate={required()} />
 			<TextInput source="imageUrl" />
-			<TextInput source="developer" />
-			<TextInput source="publisher" />
+			<TextInput source="developer" validate={required()} />
+			<TextInput source="publisher" validate={required()} />
 			<DateInput source="releaseDate" />
 		</SimpleForm>
 	</Create>

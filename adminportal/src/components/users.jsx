@@ -11,6 +11,7 @@ import {
 	SimpleForm,
 	TextField,
 	TextInput,
+	required
 } from "react-admin";
 
 import AccountBox from "@mui/icons-material/Egg";
@@ -40,11 +41,11 @@ export const UserList = (props) => {
 export const UserEdit = (props) => (
 	<Edit {...props}>
 		<SimpleForm>
-			<TextInput source="email" />
-			<TextInput source="firstName" />
-			<TextInput source="lastName" />
+			<TextInput source="email" validate={required()}/>
+			<TextInput source="firstName" validate={required()}/>
+			<TextInput source="lastName" validate={required()}/>
 			<PasswordInput source="password" />
-			<SelectInput source="userType" choices={userTypeChoices} />
+			<SelectInput source="userType" validate={required()} choices={userTypeChoices} />
 		</SimpleForm>
 	</Edit>
 );
@@ -52,11 +53,11 @@ export const UserEdit = (props) => (
 export const UserCreate = (props) => (
 	<Create {...props}>
 		<SimpleForm>
-			<TextInput source="email" />
-			<TextInput source="firstName" />
-			<TextInput source="lastName" />
-			<PasswordInput source="password" />
-			<SelectInput source="userType" choices={userTypeChoices} />
+			<TextInput source="email" validate={required()}/>
+			<TextInput source="firstName" validate={required()}/>
+			<TextInput source="lastName" validate={required()}/>
+			<PasswordInput source="password" validate={required()} />
+			<SelectInput source="userType" validate={required()} choices={userTypeChoices} />
 		</SimpleForm>
 	</Create>
 );
