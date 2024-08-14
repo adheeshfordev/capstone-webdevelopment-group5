@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Row } from 'react-bootstrap';
 
 const CheckoutPage = () => {
   const [cart, setCart] = useState(null);
@@ -133,8 +134,8 @@ const CheckoutPage = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="address">Shipping Address:</label>
-                <input
-                  type="text"
+                <textarea
+                  rows="3"
                   className="form-control"
                   id="address"
                   name="address"
@@ -159,6 +160,7 @@ const CheckoutPage = () => {
             </form>
           </div>
         </div>
+        <Row className="mb-5"/>
       </div>
       <Footer />
     </div>

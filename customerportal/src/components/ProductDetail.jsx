@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button, Alert, Form, InputGroup } from 'react-bootstrap';
 import Header from '../components/Header';
 import Cookies from 'js-cookie';
 
 function ProductDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -51,11 +52,16 @@ function ProductDetail() {
         },
         body: JSON.stringify({ productId: product._id, quantity }),
       });
+      if (response.status === 403) {
+        navigate('/signin');
+        return;
+      }
       if (response.ok) {
         setConfirmation(true);
         setTimeout(() => setConfirmation(false), 3000);
       } else {
         const data = await response.json();
+        
         setError(data.message || 'Failed to add to cart');
       }
     } catch (error) {

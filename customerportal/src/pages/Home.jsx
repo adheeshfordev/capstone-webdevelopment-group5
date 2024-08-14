@@ -13,7 +13,7 @@ export default function Home() {
 						<div className="col-lg-5">
 							<div className="intro-excerpt">
 								<h1>Modern Game <span clsas="d-block">Zone Studio</span></h1>
-								<p className="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+								<p className="mb-4">Browse our wonderful array of games.</p>
 								<p><a href="/shop" className="btn btn-secondary me-2">Shop Now</a></p>
 							</div>
 						</div>
@@ -34,7 +34,7 @@ export default function Home() {
 					
 					<div className="col-md-12 col-lg-3 mb-5 mb-lg-0">
 						<h2 className="mb-4 section-title">Excellent Gaming.</h2>
-						<p className="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. </p>
+						<p className="mb-4">All your favourite games in one place.</p>
 						<p><a href="/shop" className="btn">Explore</a></p>
 					</div> 
 					
@@ -43,10 +43,6 @@ export default function Home() {
 							<img src="/src/images/product-1.jpg" className="img-fluid product-thumbnail"/>
 							<h3 className="product-title">Spider-Man Miles Morales</h3>
 							<strong className="product-price">$50.00</strong>
-
-							<span className="icon-cross">
-								<img src="/src/images/cross.svg" className="img-fluid"/>
-							</span>
 						</a>
 					</div> 
 					
@@ -55,10 +51,6 @@ export default function Home() {
 							<img src="/src/images/product-2.jfif" className="img-fluid product-thumbnail"/>
 							<h3 className="product-title">NBA 2K</h3>
 							<strong className="product-price">$78.00</strong>
-
-							<span className="icon-cross">
-								<img src="/src/images/cross.svg" className="img-fluid"/>
-							</span>
 						</a>
 					</div>
 					
@@ -67,10 +59,6 @@ export default function Home() {
 							<img src="/src/images/product-3.png" className="img-fluid product-thumbnail"/>
 							<h3 className="product-title">GOD Fall</h3>
 							<strong className="product-price">$43.00</strong>
-
-							<span className="icon-cross">
-								<img src="/src/images/cross.svg" className="img-fluid"/>
-							</span>
 						</a>
 					</div>
 					
@@ -84,8 +72,6 @@ export default function Home() {
 				<div className="row justify-content-between">
 					<div className="col-lg-6">
 						<h2 className="section-title">Why Choose Us</h2>
-						<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-
 						<div className="row my-5">
 							<div className="col-6 col-md-6">
 								<div className="feature">
@@ -93,7 +79,6 @@ export default function Home() {
 										<img src="/src/images/truck.svg" alt="Image" className="imf-fluid"/>
 									</div>
 									<h3>Fast &amp; Free Shipping</h3>
-									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
 							</div>
 
@@ -103,7 +88,6 @@ export default function Home() {
 										<img src="/src/images/bag.svg" alt="Image" className="imf-fluid"/>
 									</div>
 									<h3>Easy to Shop</h3>
-									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
 							</div>
 
@@ -113,7 +97,6 @@ export default function Home() {
 										<img src="/src/images/support.svg" alt="Image" className="imf-fluid"/>
 									</div>
 									<h3>24/7 Support</h3>
-									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
 							</div>
 
@@ -123,7 +106,6 @@ export default function Home() {
 										<img src="/src/images/return.svg" alt="Image" className="imf-fluid"/>
 									</div>
 									<h3>Hassle Free Returns</h3>
-									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
 							</div>
 

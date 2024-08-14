@@ -1,9 +1,12 @@
 import React from 'react'
+import { Row } from 'react-bootstrap';
 
 export default function Footer() {
   return (
     <div>
-      <footer className="footer-section">
+		<Row className="mb-5"/>
+        <Row className="mb-5"/>
+      <footer className="footer-section pt-10">
 			<div className="container relative">
 
 				<div className="sofa-img">
@@ -13,8 +16,6 @@ export default function Footer() {
 				<div className="row g-5 mb-5">
 					<div className="col-lg-4">
 						<div className="mb-4 footer-logo-wrap"><a href="#" className="footer-logo">Pixel Paradise<span>.</span></a></div>
-						<p className="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant</p>
-
 						<ul className="list-unstyled custom-social">
 							<li><a href="#"><span className="fa fa-brands fa-facebook-f"></span></a></li>
 							<li><a href="#"><span className="fa fa-brands fa-twitter"></span></a></li>

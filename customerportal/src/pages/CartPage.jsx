@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer.jsx'
 import Cookies from 'js-cookie';
+import { Row } from 'react-bootstrap';
 
 class CartPage extends Component {
   constructor(props) {
@@ -129,7 +130,7 @@ class CartPage extends Component {
     return (
       <div className="cart-page">
         <Header />
-        <div className="container">
+        <div className="container mb-5">
           <h1>Cart</h1>
           {error ? (
             <p className="error-message">{error}</p>
