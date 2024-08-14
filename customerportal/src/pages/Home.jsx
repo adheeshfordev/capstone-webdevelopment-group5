@@ -39,26 +39,23 @@ export default function Home() {
 					</div> 
 					
 					<div className="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-						<a className="product-item" href="/cart">
+						<a className="product-item" href="/shop">
 							<img src="/src/images/product-1.jpg" className="img-fluid product-thumbnail"/>
-							<h3 className="product-title">Spider-Man Miles Morales</h3>
-							<strong className="product-price">$50.00</strong>
+							<h3 className="product-title">Your favourite games</h3>
 						</a>
 					</div> 
 					
 					<div className="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-						<a className="product-item" href="/cart">
+						<a className="product-item" href="/shop">
 							<img src="/src/images/product-2.jfif" className="img-fluid product-thumbnail"/>
-							<h3 className="product-title">NBA 2K</h3>
-							<strong className="product-price">$78.00</strong>
+							<h3 className="product-title">The Best titles</h3>
 						</a>
 					</div>
 					
 					<div className="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-						<a className="product-item" href="/cart">
+						<a className="product-item" href="/shop">
 							<img src="/src/images/product-3.png" className="img-fluid product-thumbnail"/>
-							<h3 className="product-title">GOD Fall</h3>
-							<strong className="product-price">$43.00</strong>
+							<h3 className="product-title">All in our shop</h3>
 						</a>
 					</div>
 					
