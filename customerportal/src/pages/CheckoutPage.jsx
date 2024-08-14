@@ -1,5 +1,3 @@
-// src/pages/CheckoutPage.jsx
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -14,6 +12,8 @@ const CheckoutPage = () => {
     name: '',
     address: '',
     creditCard: '',
+    expiry: '',
+    cvv: '',
   });
   const navigate = useNavigate();
 
@@ -154,7 +154,41 @@ const CheckoutPage = () => {
                   value={formData.creditCard}
                   onChange={handleChange}
                   required
+                  pattern="\d{16}|\d{4}\s\d{4}\s\d{4}\s\d{4}"
+                  maxLength="19"
+                  placeholder="1234567812345678 or 1234 5678 1234 5678"
                 />
+              </div>
+              <div className="form-row">
+                <div className="form-group col-xs-6">
+                  <label htmlFor="expiry">Expiry:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="expiry"
+                    name="expiry"
+                    value={formData.expiry}
+                    onChange={handleChange}
+                    required
+                    pattern="\d{2}/\d{2}"
+                    placeholder="MM/YY"
+                  />
+                </div>
+                <div className="form-group col-xs-6">
+                  <label htmlFor="cvv">CVV:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="cvv"
+                    name="cvv"
+                    value={formData.cvv}
+                    onChange={handleChange}
+                    required
+                    pattern="\d{3}"
+                    maxLength="3"
+                    placeholder="123"
+                  />
+                </div>
               </div>
               <button type="submit" className="btn btn-primary mt-3">Place Order</button>
             </form>
