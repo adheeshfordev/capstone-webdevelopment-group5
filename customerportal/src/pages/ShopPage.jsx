@@ -42,6 +42,7 @@ class ShopPage extends Component {
     return (
       <div className="shop-page">
         <Header />
+        <h1 className='text-center'>Shop our Games</h1>
         <div className="untree_co-section product-section before-footer-section">
           <div className="container">
             {error ? (
