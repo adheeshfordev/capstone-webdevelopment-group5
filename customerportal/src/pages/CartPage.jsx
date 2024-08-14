@@ -131,14 +131,14 @@ const CartPage = () => {
                     <img src={item.imageUrl} alt={item.product.name} className="img-fluid" />
                   </div>
                   <h2 className="col-md-5">{item.product.name}</h2>
-                  <p className="col-md-2">Price: ${item.price.toFixed(2)}</p>
-                  <div className="col-md-2 d-flex align-items-center">
+                  <h4 className="col-md-2 mt-2">Price: ${item.price.toFixed(2)}</h4>
+                  <div className="col-md-2 d-flex align-items-start">
                     <button
                       className="btn btn-outline-secondary"
                       onClick={() => handleQuantityChange(item.product._id, -1)}
                       disabled={item.quantity <= 1}
                     >-</button>
-                    <p className="m-0 mx-2">{item.quantity}</p>
+                    <h5 className="m-0 mx-2 mt-3 mb-0">{item.quantity}</h5>
                     <button
                       className="btn btn-outline-secondary"
                       onClick={() => handleQuantityChange(item.product._id, 1)}
