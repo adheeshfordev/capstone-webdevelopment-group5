@@ -1,1 +1,1 @@
-# capstone-webdevelopment-group5
+# A simple ReactJS and express application sample
